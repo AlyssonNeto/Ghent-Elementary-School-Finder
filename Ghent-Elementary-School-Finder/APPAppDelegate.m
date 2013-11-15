@@ -13,7 +13,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    
+    NSString *searchNetwork = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchNetwork"];
+    if (searchNetwork == nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"Katholiek onderwijs" forKey:@"searchNetwork"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    APPHomeViewController *homeVC = [[APPHomeViewController alloc] initWithNibName:nil bundle:nil];
+    self.navController = [[APPNavViewController alloc] initWithRootViewController:homeVC];
+    
+    self.window.rootViewController = self.navController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

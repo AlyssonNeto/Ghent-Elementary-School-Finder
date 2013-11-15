@@ -10,7 +10,14 @@
 #warning "This project uses features only available in iOS SDK 3.0 and later."
 #endif
 
+#define tableViewHeight HEIGHT(self.view) - HEIGHT(self.tabBarController.tabBar) - HEIGHT(self.navigationController.navigationBar) - [UIApplication sharedApplication].statusBarFrame.size.height
+#define scrollViewHeight HEIGHT(self.view) - HEIGHT(self.tabBarController.tabBar) - HEIGHT(self.navigationController.navigationBar) - [UIApplication sharedApplication].statusBarFrame.size.height
+#define appColorBlue UIColorFromHex(0x6190AF)
+#define appColorGreen UIColorFromHex(0x59BB77)
+#define appColorBackground UIColorFromHex(0xF8F3F0)
+
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import <TBMacros/Macros.h>
 #endif

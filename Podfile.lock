@@ -19,19 +19,31 @@ PODS:
   - AFNetworking/Serialization (2.0.2)
   - AFNetworking/UIKit (2.0.2):
     - AFNetworking/NSURLConnection
+  - ICViewPager (1.5)
+  - KHFlatButton (1.0.0)
   - MBProgressHUD (0.8)
+  - MDCParallaxView (0.1.4)
+  - PHFRefreshControl (1.0.0)
   - TBMacros (0.2)
   - TTTAttributedLabel (1.7.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0.2)
+  - ICViewPager (~> 1.4)
+  - KHFlatButton (~> 1.0.0)
   - MBProgressHUD (~> 0.8)
+  - MDCParallaxView (~> 0.1.4)
+  - PHFRefreshControl (~> 1.0.0)
   - TBMacros (~> 0.2)
   - TTTAttributedLabel (~> 1.7.1)
 
 SPEC CHECKSUMS:
   AFNetworking: 22de50ae71ab1c4859773f61068d6fcd1d8f9a4d
+  ICViewPager: 98e012156809be7986832a1c75b2191fc4705707
+  KHFlatButton: dd9a4481fc6a6926c66b2ac5126e37654ff4978a
   MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
+  MDCParallaxView: a1aea11598439a6c20864e7bec23aa595464475b
+  PHFRefreshControl: b000ab0b2e7c038fd82565dfa6d0cc39f2a6edca
   TBMacros: 59eeb31662b87ee404639cd7c68192d9451a3952
   TTTAttributedLabel: 05705051ca22a48f6ca72b64f301516e357b6814
 

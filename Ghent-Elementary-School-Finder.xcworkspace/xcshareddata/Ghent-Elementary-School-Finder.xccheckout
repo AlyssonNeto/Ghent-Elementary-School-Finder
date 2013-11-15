@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E6DAE8F9-53AF-4BBC-8470-ACDDB7F2D663</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Ghent-Elementary-School-Finder</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7181B07D-2FE7-4B33-8EAD-C18A2D0A521C</key>
+		<string>https://github.com/AppreciateHQ/Ghent-Elementary-School-Finder.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Ghent-Elementary-School-Finder.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7181B07D-2FE7-4B33-8EAD-C18A2D0A521C</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/AppreciateHQ/Ghent-Elementary-School-Finder.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7181B07D-2FE7-4B33-8EAD-C18A2D0A521C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7181B07D-2FE7-4B33-8EAD-C18A2D0A521C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Ghent-Elementary-School-Finder</string>
+		</dict>
+	</array>
+</dict>
+</plist>

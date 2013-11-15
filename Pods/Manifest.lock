@@ -1,0 +1,38 @@
+PODS:
+  - AFNetworking (2.0.2):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+    - AFNetworking/UIKit
+  - AFNetworking/NSURLConnection (2.0.2):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.0.2):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.0.2)
+  - AFNetworking/Security (2.0.2)
+  - AFNetworking/Serialization (2.0.2)
+  - AFNetworking/UIKit (2.0.2):
+    - AFNetworking/NSURLConnection
+  - MBProgressHUD (0.8)
+  - TBMacros (0.2)
+  - TTTAttributedLabel (1.7.2)
+
+DEPENDENCIES:
+  - AFNetworking (~> 2.0.2)
+  - MBProgressHUD (~> 0.8)
+  - TBMacros (~> 0.2)
+  - TTTAttributedLabel (~> 1.7.1)
+
+SPEC CHECKSUMS:
+  AFNetworking: 22de50ae71ab1c4859773f61068d6fcd1d8f9a4d
+  MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
+  TBMacros: 59eeb31662b87ee404639cd7c68192d9451a3952
+  TTTAttributedLabel: 05705051ca22a48f6ca72b64f301516e357b6814
+
+COCOAPODS: 0.27.1

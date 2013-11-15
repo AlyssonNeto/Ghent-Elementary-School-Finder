@@ -1,0 +1,5 @@
+platform:ios, '7.0'
+pod 'AFNetworking', '~> 2.0.2'
+pod 'TBMacros', '~> 0.2'
+pod 'MBProgressHUD', '~> 0.8'
+pod 'TTTAttributedLabel', '~> 1.7.1'

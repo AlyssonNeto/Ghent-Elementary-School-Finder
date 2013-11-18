@@ -9,14 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import <PHFRefreshControl/PHFRefreshControl.h>
-#import <ICViewPager/ViewPagerController.h>
 #import <MapKit/MapKit.h>
 #import "APPSchoolCell.h"
 #import "APPSchoolDetailViewController.h"
 #import "APPAnnotation.h"
 
 
-@interface APPSearchResultsViewController : ViewPagerController <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, ViewPagerDataSource, ViewPagerDelegate, MKMapViewDelegate>
+@interface APPSearchResultsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, MKMapViewDelegate>
 
 -(id)initWithSchoolData:(NSMutableArray *)data;
 

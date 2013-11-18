@@ -51,7 +51,12 @@
     
     self.valuesDict = values;
     
-    [self.titleLabel setText:[values objectForKey:@"roepnaam"]];
+    if ([self.valuesDict valueForKey:@"naam"]) {
+        [self.titleLabel setText:[values objectForKey:@"naam"]];
+    }
+    else {
+        [self.titleLabel setText:[values objectForKey:@"roepnaam"]];
+    }
     
     if ([[values objectForKey:@"distance"] intValue] == 0) {
         self.titleLabel.frame = CGRectMake(15, 0, 210, 45);

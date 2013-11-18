@@ -15,9 +15,12 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLLocation *location;
 
-@property (strong, nonatomic) NSMutableArray *tableData;
-
 @property (strong, nonatomic) MKMapView *mapView;
+
+@property (strong, nonatomic) UIButton *listButton;
+@property (strong, nonatomic) UIButton *mapButton;
+
+@property (nonatomic) NSInteger idSchool;
 
 @end
 
@@ -35,11 +38,8 @@ static BOOL haveAlreadyReceivedCoordinates;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.delegate = self;
-    self.dataSource = self;
     self.navigationItem.title = @"Schoolzoeker Gent";
     [self.locationManager startUpdatingLocation];
     haveAlreadyReceivedCoordinates = NO;
@@ -59,16 +59,42 @@ static BOOL haveAlreadyReceivedCoordinates;
     [self.mapView setScrollEnabled:YES];
     self.mapView.delegate = self;
     
-    MKCoordinateRegion region = {{0.0, 0.0}, {0.0, 0.0}};
-    region.center.latitude = [[[_data objectAtIndex:0] valueForKey:@"lat"] floatValue];
-    region.center.longitude = [[[_data objectAtIndex:0] valueForKey:@"long"] floatValue];
-    region.span.latitudeDelta = 0.01f;
-    region.span.longitudeDelta = 0.01f;
-    [self.mapView setRegion:region animated:YES];
-    
     [self.view addSubview:self.mapView];
     self.mapView.hidden = YES;
     self.mapView.showsUserLocation = YES;
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, BOTTOM(self.tableView), WIDTH(self.view), 49)];
+    footerView.backgroundColor = appColorBackground;
+    
+    self.listButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.view) / 2, 49)];
+    [self.listButton setImage:[UIImage imageNamed:@"list"] forState:UIControlStateSelected];
+    [self.listButton setImage:[UIImage imageNamed:@"list-inactive"] forState:UIControlStateNormal];
+    self.listButton.selected = YES;
+    [self.listButton addTarget:self action:@selector(showList) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.mapButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH(self.view)/2, 0, WIDTH(self.view) / 2, 49)];
+    [self.mapButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateSelected];
+    [self.mapButton setImage:[UIImage imageNamed:@"location-inactive"] forState:UIControlStateNormal];
+    [self.mapButton addTarget:self action:@selector(showMap) forControlEvents:UIControlEventTouchUpInside];
+    
+    [footerView addSubview:self.listButton];
+    [footerView addSubview:self.mapButton];
+    
+    [self.view addSubview:footerView];
+}
+
+-(void)showList {
+    self.mapButton.selected = NO;
+    self.listButton.selected = YES;
+    self.tableView.hidden = NO;
+    self.mapView.hidden = YES;
+}
+
+-(void)showMap {
+    self.mapButton.selected = YES;
+    self.listButton.selected = NO;
+    self.tableView.hidden = YES;
+    self.mapView.hidden = NO;
 }
 
 -(void)refreshSchools {
@@ -81,11 +107,10 @@ static BOOL haveAlreadyReceivedCoordinates;
 
 -(void)orderResponseDataByDistance {
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        _tableData = [NSMutableArray array];
         for (id school in _data) {
             CLLocation *restoLocation = [[CLLocation alloc] initWithLatitude:[[school objectForKey:@"lat"] floatValue] longitude:[[school objectForKey:@"long"] floatValue]];
             CLLocationDistance meters = [restoLocation distanceFromLocation:_location];
-            [school setValue:[NSNumber numberWithInt:(int) meters] forKey:@"distance"];
+            [school setValue:[NSNumber numberWithInt:(int)meters] forKey:@"distance"];
         }
         
         [_data sortUsingComparator:^(id obj1, id obj2) {
@@ -99,16 +124,26 @@ static BOOL haveAlreadyReceivedCoordinates;
                 APPAnnotation *annotation = [[APPAnnotation alloc] init];
                 annotation.lat = [[_data[i] valueForKey:@"lat"] floatValue];
                 annotation.lon = [[_data[i] valueForKey:@"long"] floatValue];
-                annotation.title = [_data[i] valueForKey:@"roepnaam"];
-                annotation.subtitle = [_data[i] valueForKey:@"straat"];
+                if ([_data[i] valueForKey:@"naam"]) {
+                    annotation.title = [_data[i] valueForKey:@"naam"];
+                }
+                else {
+                    annotation.title = [_data[i] valueForKey:@"roepnaam"];
+                }
+                
+                if ([_data[i] valueForKey:@"adres"]) {
+                    annotation.subtitle = [_data[i] valueForKey:@"adres"];
+                }
+                else {
+                    annotation.subtitle = [_data[i] valueForKey:@"straat"];
+                }
                 annotation.tag = i;
                 [self.mapView addAnnotation:annotation];
             }
-            // show all annotations in region
-            [self.mapView showAnnotations:self.mapView.annotations animated:YES];
             [self.tableView reloadData];
         });
     });
+    
 }
 
 - (CLLocationManager *)locationManager {
@@ -133,17 +168,40 @@ static BOOL haveAlreadyReceivedCoordinates;
     }
     else {
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+        UIImage *image;
+        
+        APPAnnotation *appAnnotation = (APPAnnotation *)annotation;
+        
+        if (annotation == mapView.userLocation) {
+            annotationView.pinColor = MKPinAnnotationColorPurple;
+            image = nil;
+        }
+        else if ([[[_data objectAtIndex:appAnnotation.tag] valueForKey:@"aanbod"] isEqualToString:@"Kleuterschool"]) {
+            image = [UIImage imageNamed:@"redPin"];
+        }
+        else if ([[[_data objectAtIndex:appAnnotation.tag] valueForKey:@"aanbod"] isEqualToString:@"Lagere school"]) {
+            image = [UIImage imageNamed:@"bluePin"];
+        }
+        else if ([[[_data objectAtIndex:appAnnotation.tag] valueForKey:@"aanbod"] isEqualToString:@"Basisschool (Kleuter + Lager)"]) {
+            image = [UIImage imageNamed:@"greenPin"];
+        }
+        else if ([[[_data objectAtIndex:appAnnotation.tag] valueForKey:@"aanbod"] isEqualToString:@"Buitengewoon onderwijs"]) {
+            image = [UIImage imageNamed:@"brownPin"];
+        }
+        else {
+            annotationView.pinColor = MKPinAnnotationColorRed;
+        }
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        
+        [annotationView addSubview:imageView];
     }
     
-    //annotationView.image = [UIImage imageNamed:@"location"];
-    if (annotation == mapView.userLocation) {
-        annotationView.pinColor = MKPinAnnotationColorGreen;
-    }
-    else {
+    self.mapView.userLocation.title = @"Huidige locatie";
+    annotationView.canShowCallout = YES;
+    if (annotation != mapView.userLocation) {
         UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
         annotationView.rightCalloutAccessoryView = rightButton;
-        annotationView.pinColor = MKPinAnnotationColorRed;
-        annotationView.canShowCallout = YES;
     }
     return annotationView;
 }
@@ -164,6 +222,13 @@ static BOOL haveAlreadyReceivedCoordinates;
     }
     [self.locationManager stopUpdatingLocation];
     haveAlreadyReceivedCoordinates = YES;
+    
+    MKCoordinateRegion mapRegion;
+    mapRegion.center = _location.coordinate;
+    mapRegion.span.latitudeDelta = 0.05;
+    mapRegion.span.longitudeDelta = 0.05;
+    
+    [self.mapView setRegion:mapRegion animated: YES];
 }
 
 #pragma mark - TableView Delegate methods
@@ -188,7 +253,7 @@ static BOOL haveAlreadyReceivedCoordinates;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.data count];
+    return [_data count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -201,65 +266,4 @@ static BOOL haveAlreadyReceivedCoordinates;
     [cell setValues:[_data objectAtIndex:indexPath.row]];
     return cell;
 }
-
-#pragma mark - ViewPager DataSource methods
-- (NSUInteger)numberOfTabsForViewPager:(ViewPagerController *)viewPager {
-    return 2;
-}
-
-- (UIView *)viewPager:(ViewPagerController *)viewPager viewForTabAtIndex:(NSUInteger)index {
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
-    if (index == 0) {
-        imageView.image = [UIImage imageNamed:@"list"];
-    }
-    else {
-        imageView.image = [UIImage imageNamed:@"location"];
-    }
-    return imageView;
-}
-
-#pragma mark - ViewPager Delegate methods
-- (UIColor *)viewPager:(ViewPagerController *)viewPager colorForComponent:(ViewPagerComponent)component withDefault:(UIColor *)color {
-    switch (component) {
-        case ViewPagerIndicator:
-            return appColorBlue;
-        default:
-            return color;
-    }
-}
-
-- (void)viewPager:(ViewPagerController *)viewPager didChangeTabToIndex:(NSUInteger)index {
-    if (index == 0) {
-        self.tableView.hidden = NO;
-        self.mapView.hidden = YES;
-    }
-    else {
-        self.tableView.hidden = YES;
-        self.mapView.hidden = NO;
-    }
-}
-
-- (CGFloat)viewPager:(ViewPagerController *)viewPager valueForOption:(ViewPagerOption)option withDefault:(CGFloat)value {
-    switch (option) {
-        case ViewPagerOptionStartFromSecondTab:
-            return 0.0;
-        case ViewPagerOptionCenterCurrentTab:
-            return 1.0;
-        case ViewPagerOptionTabLocation:
-            return 0.0;
-        case ViewPagerOptionTabHeight:
-            return 49.0;
-        case ViewPagerOptionTabOffset:
-            return 36.0;
-        case ViewPagerOptionTabWidth:
-            return UIInterfaceOrientationIsLandscape(self.interfaceOrientation) ? 128.0 : 96.0;
-        case ViewPagerOptionFixFormerTabsPositions:
-            return 1.0;
-        case ViewPagerOptionFixLatterTabsPositions:
-            return 1.0;
-        default:
-            return value;
-    }
-}
-
 @end

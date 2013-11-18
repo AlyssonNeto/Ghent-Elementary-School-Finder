@@ -1,5 +1,5 @@
 //
-//  APPSearchFilterViewController.h
+//  APPPrimarySearchFilterViewController.h
 //  Ghent-Elementary-School-Finder
 //
 //  Created by Jarno Verreyt on 15/11/13.
@@ -12,13 +12,8 @@
 #import <AFNetworking/AFNetworking.h>
 #import "APPSearchNetworkViewController.h"
 #import "APPSearchResultsViewController.h"
+#import "APPApiClient.h"
 
-@interface APPSearchFilterViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MBProgressHUDDelegate>
-
-enum SearchPossibilities {
-    kSearchTerm = 0,
-    kSearchOffer,
-    kSearchNetwork
-};
+@interface APPPrimarySearchFilterViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MBProgressHUDDelegate>
 
 @end

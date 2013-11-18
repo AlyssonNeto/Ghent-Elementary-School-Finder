@@ -1,30 +1,35 @@
 //
-//  APPSearchFilterViewController.m
+//  APPPrimarySearchFilterViewController.m
 //  Ghent-Elementary-School-Finder
 //
 //  Created by Jarno Verreyt on 15/11/13.
 //  Copyright (c) 2013 Appreciate. All rights reserved.
 //
 
-#import "APPSearchFilterViewController.h"
+#import "APPPrimarySearchFilterViewController.h"
 
 
-@interface APPSearchFilterViewController ()
+@interface APPPrimarySearchFilterViewController ()
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UITextField *searchTermTextField;
-@property (strong, nonatomic) NSMutableArray *data;
 @property (strong, nonatomic) NSMutableArray *filteredData;
-
+@property (strong, nonatomic) NSMutableArray *data;
 
 @property (strong, nonatomic) NSArray *searchOfferCriteria;
 @property (strong, nonatomic) NSMutableArray *searchSelectedOfferCriteria;
 
 @property (strong, nonatomic) MBProgressHUD *hud;
 
+enum SearchPossibilitiesPrimary {
+    kSearchTerm = 0,
+    kSearchOffer,
+    kSearchNetwork
+};
+
 @end
 
-@implementation APPSearchFilterViewController
+@implementation APPPrimarySearchFilterViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,18 +65,6 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:gestureRecognizer];
-    
-    NSString *documentsDirectory = nil;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    documentsDirectory = [paths objectAtIndex:0];
-    NSString *filename = @"data-schools.plist";
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:filename];
-    
-    self.data = [NSMutableArray arrayWithContentsOfFile:path];
-}
-
--(void)showInfo {
-    
 }
 
 - (void) hideKeyboard {
@@ -79,46 +72,80 @@
 }
 
 - (void) search {
-    self.filteredData = [[NSMutableArray alloc] init];
-    NSString *network = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchNetwork"];
+    self.hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    self.hud.labelText = @"Scholen zoeken..";
+    [self.hud show:YES];
+    [self.navigationController.view addSubview:self.hud];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    if (_data) {
-        for (int i = 0; i < [_data count]; i++) {
-            if ([self.searchTermTextField.text isEqualToString:@""] && [self.searchSelectedOfferCriteria count] == 0) {
-                if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
-                    [_filteredData addObject:[_data objectAtIndex:i]];
-                }
+    [[APPApiClient sharedClient] getPath:@"Onderwijs&Opvoeding/Basisscholen.json" getParameters:nil getEndpointWithcompletion:^(NSArray *results, NSError *error) {
+        self.hud.mode = MBProgressHUDModeCustomView;
+        if (!error) {
+            _data = [NSMutableArray array];
+            
+            for (id school in results) {
+                NSMutableArray *schoolDict = [school mutableCopy];
+                [schoolDict setValue:nil forKey:@"distance"];
+                [_data addObject:schoolDict];
             }
-            else if ([self.searchTermTextField.text isEqualToString:@""] && [self.searchSelectedOfferCriteria count] != 0) {
-                if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
-                    if ([self.searchSelectedOfferCriteria containsObject:[[_data objectAtIndex:i] valueForKey:@"aanbod"]]) {
+
+            
+            self.filteredData = [[NSMutableArray alloc] init];
+            NSString *network = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchNetwork"];
+            
+            for (int i = 0; i < [_data count]; i++) {
+                if ([self.searchTermTextField.text isEqualToString:@""] && [self.searchSelectedOfferCriteria count] == 0) {
+                    if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
                         [_filteredData addObject:[_data objectAtIndex:i]];
                     }
                 }
-            }
-            else if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound && [self.searchSelectedOfferCriteria count] == 0) {
-                if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
-                    [_filteredData addObject:[_data objectAtIndex:i]];
+                else if ([self.searchTermTextField.text isEqualToString:@""] && [self.searchSelectedOfferCriteria count] != 0) {
+                    if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
+                        if ([self.searchSelectedOfferCriteria containsObject:[[_data objectAtIndex:i] valueForKey:@"aanbod"]]) {
+                            [_filteredData addObject:[_data objectAtIndex:i]];
+                        }
+                    }
                 }
-            }
-            else if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound) {
-                if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
-                    if ([self.searchSelectedOfferCriteria containsObject:[[_data objectAtIndex:i] valueForKey:@"aanbod"]]) {
+                else if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound && [self.searchSelectedOfferCriteria count] == 0) {
+                    if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
                         [_filteredData addObject:[_data objectAtIndex:i]];
                     }
                 }
+                else if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound) {
+                    if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
+                        if ([self.searchSelectedOfferCriteria containsObject:[[_data objectAtIndex:i] valueForKey:@"aanbod"]]) {
+                            [_filteredData addObject:[_data objectAtIndex:i]];
+                        }
+                    }
+                }
+            }
+            if ([self.filteredData count] > 0) {
+                self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
+                if ([self.filteredData count] == 1) {
+                    self.hud.labelText = @"1 school gevonden!";
+                }
+                else {
+                    self.hud.labelText = [NSString stringWithFormat:@"%i scholen gevonden!", [_filteredData count]];
+                }
+
+                APPSearchResultsViewController *searchResultsVC = [[APPSearchResultsViewController alloc] initWithSchoolData:self.filteredData];
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Terug" style:UIBarButtonItemStylePlain target:nil action:nil];
+                [self.navigationController pushViewController:searchResultsVC animated:YES];
+            }
+            else {
+                [self.hud hide:YES];
+                [[[UIAlertView alloc] initWithTitle:@"Geen scholen gevonden" message:@"Er konden geen scholen gevonden worden met dit zoekcriteria" delegate:self cancelButtonTitle:@"Oke" otherButtonTitles:nil] show];
             }
         }
-    }
-    if ([self.filteredData count] > 0) {
-        NSLog(@"%i", [self.filteredData count]);
-        APPSearchResultsViewController *searchResultsVC = [[APPSearchResultsViewController alloc] initWithSchoolData:self.filteredData];
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Terug" style:UIBarButtonItemStylePlain target:nil action:nil];
-        [self.navigationController pushViewController:searchResultsVC animated:YES];
-    }
-    else {
-        [[[UIAlertView alloc] initWithTitle:@"Geen scholen gevonden" message:@"Er konden geen scholen gevonden worden met dit zoekcriteria" delegate:self cancelButtonTitle:@"Oke" otherButtonTitles:nil] show];
-    }
+        else {
+            NSLog(@"Error: %@", error);
+            self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"exclamationmark"]];
+            self.hud.labelText = @"Er ging iets mis..";
+            self.hud.detailsLabelText = @"Is er een internetverbinding?";
+        }
+        [self.hud hide:YES afterDelay:2];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -196,7 +223,7 @@
             if (!self.searchTermTextField) {
                 self.searchTermTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, CENTER_IN_PARENT_Y(cell.contentView, 35), 290, 35)];
             }
-            
+            self.searchTermTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
             self.searchTermTextField.delegate = self;
             self.searchTermTextField.placeholder = @"Zoekterm";
             self.searchTermTextField.tag = 1;
@@ -208,8 +235,36 @@
             cell.detailTextLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchNetwork"];
         }
     }
-    
     else if(indexPath.section == kSearchOffer) {
+        
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(3, CENTER_IN_PARENT_Y(cell, 10), 10, 10)];
+        switch (indexPath.row) {
+            case 0:
+                cell.imageView.image = [UIImage imageNamed:@"red"];
+                //view.backgroundColor = [UIColor redColor];
+                break;
+            case 1:
+                cell.imageView.image = [UIImage imageNamed:@"blue"];
+                //view.backgroundColor = [UIColor blueColor];
+                break;
+            case 2:
+                cell.imageView.image = [UIImage imageNamed:@"green"];
+                //view.backgroundColor = [UIColor greenColor];
+                break;
+            case 3:
+                cell.imageView.image = [UIImage imageNamed:@"brown"];
+                //view.backgroundColor = [UIColor yellowColor];
+                break;
+                
+            default:
+                cell.imageView.image = nil;
+                //view.backgroundColor = [UIColor blackColor];
+                break;
+        }
+        
+        
+        view.layer.cornerRadius = 5.0f;
+        [cell addSubview:view];
         cell.textLabel.text = [self.searchOfferCriteria objectAtIndex:indexPath.row];
         if ([_searchSelectedOfferCriteria containsObject:cell.textLabel.text]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;

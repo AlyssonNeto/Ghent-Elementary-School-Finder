@@ -24,7 +24,12 @@
     self = [super init];
     if (self) {
         _detailInfo = detailInfo;
-        self.navigationItem.title = [NSString stringWithFormat:@"%@", [_detailInfo valueForKey:@"roepnaam"]];
+        if ([_detailInfo valueForKey:@"naam"]) {
+            self.navigationItem.title = [_detailInfo valueForKey:@"naam"];
+        }
+        else {
+            self.navigationItem.title = [_detailInfo valueForKey:@"roepnaam"];
+        }
     }
     return self;
 }
@@ -32,7 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.view), scrollViewHeight)];
     self.scrollView.delegate = self;
@@ -63,7 +68,14 @@
     UILabel *nameTitle = [[UILabel alloc] initWithFrame:CGRectMake(25, padding, 270, 40)];
     nameTitle.font = [UIFont boldSystemFontOfSize:18];
     nameTitle.textColor = appColorBlue;
-    nameTitle.text = [_detailInfo valueForKey:@"roepnaam"];
+    if ([_detailInfo valueForKey:@"naam"]) {
+        nameTitle.text = [_detailInfo valueForKey:@"naam"];
+    }
+    else {
+        nameTitle.text = [_detailInfo valueForKey:@"roepnaam"];
+    }
+    
+    
     [nameTitle sizeToFit];
     [containerView addSubview:nameTitle];
     
@@ -77,41 +89,55 @@
     UILabel *address = [[UILabel alloc] initWithFrame:CGRectMake(25, BOTTOM(addressTitle) + 5, 270, 40)];
     address.font = [UIFont systemFontOfSize:14];
     address.textColor = [UIColor blackColor];
-    address.text = [_detailInfo valueForKey:@"straat"];
+    
+    if ([_detailInfo valueForKey:@"adres"]) {
+        address.text = [_detailInfo valueForKey:@"adres"];
+    }
+    else {
+        address.text = [_detailInfo valueForKey:@"straat"];
+    }
+    
+    
     [address sizeToFit];
     [containerView addSubview:address];
     
-    UILabel *offerTitle = [[UILabel alloc] initWithFrame:CGRectMake(25, BOTTOM(address) + padding, 270, 40)];
-    offerTitle.font = [UIFont boldSystemFontOfSize:16];
-    offerTitle.textColor = appColorBlue;
-    offerTitle.text = @"Aanbod";
-    [offerTitle sizeToFit];
-    [containerView addSubview:offerTitle];
+    UIButton *showRouteBtn;
     
-    UILabel *offer = [[UILabel alloc] initWithFrame:CGRectMake(25, BOTTOM(offerTitle) + 5, 270, 40)];
-    offer.font = [UIFont systemFontOfSize:14];
-    offer.textColor = [UIColor blackColor];
-    offer.text = [_detailInfo valueForKey:@"aanbod"];
-    [offer sizeToFit];
-    [containerView addSubview:offer];
-    
-    UILabel *networkTitle = [[UILabel alloc] initWithFrame:CGRectMake(25, BOTTOM(offer) + padding, 270, 40)];
-    networkTitle.font = [UIFont boldSystemFontOfSize:16];
-    networkTitle.textColor = appColorBlue;
-    networkTitle.text = @"Net";
-    [networkTitle sizeToFit];
-    [containerView addSubview:networkTitle];
-    
-    UILabel *network = [[UILabel alloc] initWithFrame:CGRectMake(25, BOTTOM(networkTitle) + 5, 270, 40)];
-    network.font = [UIFont systemFontOfSize:14];
-    network.textColor = [UIColor blackColor];
-    network.text = [_detailInfo valueForKey:@"net"];
-    network.numberOfLines = 0;
-    network.lineBreakMode = NSLineBreakByWordWrapping;
-    [network sizeToFit];
-    [containerView addSubview:network];
-    
-    UIButton *showRouteBtn = [KHFlatButton buttonWithFrame:CGRectMake(CENTER_IN_PARENT_X(containerView, 300), BOTTOM(network) + padding, 300, 50) withTitle:@"TOON ROUTE" backgroundColor:appColorGreen];
+    if (![_detailInfo valueForKey:@"zetel"]) {
+        UILabel *offerTitle = [[UILabel alloc] initWithFrame:CGRectMake(25, BOTTOM(address) + padding, 270, 40)];
+        offerTitle.font = [UIFont boldSystemFontOfSize:16];
+        offerTitle.textColor = appColorBlue;
+        offerTitle.text = @"Aanbod";
+        [offerTitle sizeToFit];
+        [containerView addSubview:offerTitle];
+        
+        UILabel *offer = [[UILabel alloc] initWithFrame:CGRectMake(25, BOTTOM(offerTitle) + 5, 270, 40)];
+        offer.font = [UIFont systemFontOfSize:14];
+        offer.textColor = [UIColor blackColor];
+        offer.text = [_detailInfo valueForKey:@"aanbod"];
+        [offer sizeToFit];
+        [containerView addSubview:offer];
+        
+        UILabel *networkTitle = [[UILabel alloc] initWithFrame:CGRectMake(25, BOTTOM(offer) + padding, 270, 40)];
+        networkTitle.font = [UIFont boldSystemFontOfSize:16];
+        networkTitle.textColor = appColorBlue;
+        networkTitle.text = @"Net";
+        [networkTitle sizeToFit];
+        [containerView addSubview:networkTitle];
+        
+        UILabel *network = [[UILabel alloc] initWithFrame:CGRectMake(25, BOTTOM(networkTitle) + 5, 270, 40)];
+        network.font = [UIFont systemFontOfSize:14];
+        network.textColor = [UIColor blackColor];
+        network.text = [_detailInfo valueForKey:@"net"];
+        network.numberOfLines = 0;
+        network.lineBreakMode = NSLineBreakByWordWrapping;
+        [network sizeToFit];
+        [containerView addSubview:network];
+        showRouteBtn = [KHFlatButton buttonWithFrame:CGRectMake(CENTER_IN_PARENT_X(containerView, 300), BOTTOM(network) + padding, 300, 50) withTitle:@"Toon route" backgroundColor:appColorGreen];
+    }
+    else {
+        showRouteBtn = [KHFlatButton buttonWithFrame:CGRectMake(CENTER_IN_PARENT_X(containerView, 300), BOTTOM(address) + padding, 300, 50) withTitle:@"Toon route" backgroundColor:appColorGreen];
+    }
     
     [showRouteBtn addTarget:self action:@selector(showRoute) forControlEvents:UIControlEventTouchUpInside];
     [containerView addSubview:showRouteBtn];

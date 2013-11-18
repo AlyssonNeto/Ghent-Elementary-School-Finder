@@ -38,7 +38,12 @@
                                        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
                                        if (httpResponse.statusCode == 200) {
                                            dispatch_async(dispatch_get_main_queue(), ^{
-                                               completion(responseObject[@"Basisscholen"], nil);
+                                               if (responseObject[@"SecundaireScholen"]) {
+                                                   completion(responseObject[@"SecundaireScholen"], nil);
+                                               }
+                                               if (responseObject[@"Basisscholen"]) {
+                                                   completion(responseObject[@"Basisscholen"], nil);
+                                               }
                                            });
                                        }
                                        else {

@@ -22,6 +22,10 @@
         [self.navigationBar setTintColor:[UIColor whiteColor]];
         [self.navigationBar setTranslucent:NO];
         [self.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName]];
+    
+        UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+        [infoButton addTarget:self action:@selector(showInfo) forControlEvents:UIControlEventTouchUpInside];
+        [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:infoButton]];
     }
     return self;
 }
@@ -29,18 +33,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //[self addRightBarButton];
-}
-
-/*-(void)addRightBarButton {
-    UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    [infoButton addTarget:self action:@selector(showInfo) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:infoButton]];
 }
 
 -(void)showInfo {
     APPSearchResultsViewController *testVC = [[APPSearchResultsViewController alloc] initWithSchoolData:nil];
     [self.navigationController presentViewController:testVC animated:YES completion:nil];
-}*/
+}
 
 @end

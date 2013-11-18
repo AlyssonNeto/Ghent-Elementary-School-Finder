@@ -81,7 +81,8 @@ static BOOL haveAlreadyReceivedCoordinates;
     [self.view addSubview:self.mapView];
     self.mapView.hidden = YES;
     self.mapView.showsUserLocation = YES;
-    // show all annotations
+    
+    // show all annotations in region
     [self.mapView showAnnotations:self.mapView.annotations animated:YES];
     
 }
@@ -125,46 +126,40 @@ static BOOL haveAlreadyReceivedCoordinates;
     return _locationManager;
 }
 
+#pragma mark - MKMapView Delegate methods
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    static NSString * const identifier = @"Identifier";
+    MKPinAnnotationView* annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+    
+    if (annotationView) {
+        annotationView.annotation = annotation;
+    }
+    else {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+    }
+    
+    //annotationView.image = [UIImage imageNamed:@"location"];
+    if (annotation == mapView.userLocation) {
+        annotationView.pinColor = MKPinAnnotationColorGreen;
+    }
+    else {
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+        annotationView.rightCalloutAccessoryView = rightButton;
+        annotationView.pinColor = MKPinAnnotationColorRed;
+        annotationView.canShowCallout = YES;
+    }
+    return annotationView;
+}
+
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     APPAnnotation *annotation = (APPAnnotation*)view.annotation;
     APPSchoolDetailViewController *schoolDetailVC = [[APPSchoolDetailViewController alloc] initWithDetailInformation:[_data objectAtIndex:annotation.tag]];
     [self.navigationController pushViewController:schoolDetailVC animated:YES];
 }
 
-#pragma mark - MKMapView Delegate methods
-
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
-    if ([annotation isKindOfClass:[MKUserLocation class]]) {
-        return nil;
-    }
-    else if ([annotation isKindOfClass:[APPAnnotation class]]) {
-        static NSString * const identifier = @"Identifier";
-        MKAnnotationView* annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        
-        if (annotationView) {
-            annotationView.annotation = annotation;
-        }
-        else {
-            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-        }
-        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
-        
-        annotationView.rightCalloutAccessoryView = rightButton;
-        annotationView.canShowCallout = YES;
-        annotationView.image = [UIImage imageNamed:@"location"];
-        
-        return annotationView;
-    }
-    return nil;
-}
-
--(void)showDetail {
-    
-}
-
-
-#pragma mark - CLLocationManagerDelegate methods
+#pragma mark - CLLocationManager Delegate methods
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     if(!haveAlreadyReceivedCoordinates) {
@@ -175,7 +170,7 @@ static BOOL haveAlreadyReceivedCoordinates;
     haveAlreadyReceivedCoordinates = YES;
 }
 
-#pragma mark TableView Delegate methods
+#pragma mark - TableView Delegate methods
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -188,7 +183,7 @@ static BOOL haveAlreadyReceivedCoordinates;
     [self.navigationController pushViewController:schoolDetailVC animated:YES];
 }
 
-#pragma mark TableView DataSource methods
+#pragma mark - TableView DataSource methods
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -210,7 +205,7 @@ static BOOL haveAlreadyReceivedCoordinates;
     return cell;
 }
 
-#pragma mark - ViewPagerDataSource
+#pragma mark - ViewPager DataSource methods
 - (NSUInteger)numberOfTabsForViewPager:(ViewPagerController *)viewPager {
     return 2;
 }
@@ -226,9 +221,8 @@ static BOOL haveAlreadyReceivedCoordinates;
     return imageView;
 }
 
-#pragma mark - ViewPagerDelegate
+#pragma mark - ViewPager Delegate methods
 - (UIColor *)viewPager:(ViewPagerController *)viewPager colorForComponent:(ViewPagerComponent)component withDefault:(UIColor *)color {
-    
     switch (component) {
         case ViewPagerIndicator:
             return appColorBlue;
@@ -249,7 +243,6 @@ static BOOL haveAlreadyReceivedCoordinates;
 }
 
 - (CGFloat)viewPager:(ViewPagerController *)viewPager valueForOption:(ViewPagerOption)option withDefault:(CGFloat)value {
-    
     switch (option) {
         case ViewPagerOptionStartFromSecondTab:
             return 0.0;

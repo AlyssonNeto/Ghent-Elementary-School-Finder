@@ -74,20 +74,13 @@
     [self.view addSubview:infoLabel];
     
     UIButton *startBtn = [KHFlatButton buttonWithFrame:CGRectMake(CENTER_IN_PARENT_X(self.view, 300), BOTTOM(infoLabel) + 20, 300, 50) withTitle:@"Start" backgroundColor:appColorGreen];
-    
     [startBtn addTarget:self action:@selector(openSearchView) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:startBtn];
-                          
 }
 
 -(void)openSearchView {
     APPSearchFilterViewController *searchFilterVC = [[APPSearchFilterViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:searchFilterVC animated:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 @end

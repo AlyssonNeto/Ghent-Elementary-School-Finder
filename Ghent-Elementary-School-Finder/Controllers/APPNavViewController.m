@@ -43,10 +43,4 @@
     [self.navigationController presentViewController:testVC animated:YES completion:nil];
 }*/
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 @end

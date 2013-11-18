@@ -11,7 +11,6 @@
 
 @interface APPAnnotation : NSObject <MKAnnotation> {
     CLLocationCoordinate2D coordinate;
-    NSInteger tag;
 }
 
 @property (nonatomic) float lat;

@@ -107,6 +107,8 @@
     network.font = [UIFont systemFontOfSize:14];
     network.textColor = [UIColor blackColor];
     network.text = [_detailInfo valueForKey:@"net"];
+    network.numberOfLines = 0;
+    network.lineBreakMode = NSLineBreakByWordWrapping;
     [network sizeToFit];
     [containerView addSubview:network];
     
@@ -123,8 +125,6 @@
     parallaxView.scrollViewDelegate = self;
     parallaxView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:parallaxView];
-    
-   
 }
 
 -(CALayer*)createBorderWithY:(CGFloat)y {

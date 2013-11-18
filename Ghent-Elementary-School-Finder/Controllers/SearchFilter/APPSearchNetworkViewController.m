@@ -67,7 +67,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"CellIdentifier"];
     }
-    cell.textLabel.font = [UIFont systemFontOfSize:12];
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     cell.textLabel.text = [self.searchOfferArray objectAtIndex:indexPath.row];
     if ([[self.searchOfferArray objectAtIndex:indexPath.row] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchNetwork"]]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

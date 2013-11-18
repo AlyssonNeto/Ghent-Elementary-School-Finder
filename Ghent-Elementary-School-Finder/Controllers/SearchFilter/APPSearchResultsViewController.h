@@ -13,6 +13,7 @@
 #import <MapKit/MapKit.h>
 #import "APPSchoolCell.h"
 #import "APPSchoolDetailViewController.h"
+#import "APPAnnotation.h"
 
 
 @interface APPSearchResultsViewController : ViewPagerController <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, ViewPagerDataSource, ViewPagerDelegate, MKMapViewDelegate>

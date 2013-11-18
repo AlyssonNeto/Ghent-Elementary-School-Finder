@@ -36,6 +36,8 @@ static BOOL haveAlreadyReceivedCoordinates;
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     self.delegate = self;
     self.dataSource = self;
     self.navigationItem.title = @"Schoolzoeker Gent";
@@ -68,13 +70,20 @@ static BOOL haveAlreadyReceivedCoordinates;
     
     for (int i = 0; i < [_data count]; i++) {
         APPAnnotation *annotation = [[APPAnnotation alloc] init];
-        annotation.lat = [[[_data objectAtIndex:i] valueForKey:@"lat"] floatValue];
-        annotation.lon = [[[_data objectAtIndex:i] valueForKey:@"long"] floatValue];
+        annotation.lat = [[_data[i] valueForKey:@"lat"] floatValue];
+        annotation.lon = [[_data[i] valueForKey:@"long"] floatValue];
+        annotation.title = [_data[i] valueForKey:@"roepnaam"];
+        annotation.subtitle = [_data[i] valueForKey:@"straat"];
+        annotation.tag = i;
         [self.mapView addAnnotation:annotation];
     }
     
     [self.view addSubview:self.mapView];
     self.mapView.hidden = YES;
+    self.mapView.showsUserLocation = YES;
+    // show all annotations
+    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
+    
 }
 
 -(void)refreshSchools {
@@ -115,6 +124,45 @@ static BOOL haveAlreadyReceivedCoordinates;
     
     return _locationManager;
 }
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    APPAnnotation *annotation = (APPAnnotation*)view.annotation;
+    APPSchoolDetailViewController *schoolDetailVC = [[APPSchoolDetailViewController alloc] initWithDetailInformation:[_data objectAtIndex:annotation.tag]];
+    [self.navigationController pushViewController:schoolDetailVC animated:YES];
+}
+
+#pragma mark - MKMapView Delegate methods
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    else if ([annotation isKindOfClass:[APPAnnotation class]]) {
+        static NSString * const identifier = @"Identifier";
+        MKAnnotationView* annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        
+        if (annotationView) {
+            annotationView.annotation = annotation;
+        }
+        else {
+            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+        }
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+        
+        annotationView.rightCalloutAccessoryView = rightButton;
+        annotationView.canShowCallout = YES;
+        annotationView.image = [UIImage imageNamed:@"location"];
+        
+        return annotationView;
+    }
+    return nil;
+}
+
+-(void)showDetail {
+    
+}
+
 
 #pragma mark - CLLocationManagerDelegate methods
 

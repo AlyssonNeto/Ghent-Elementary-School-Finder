@@ -40,7 +40,7 @@
     self.navigationItem.title = @"Schoolzoeker Gent";
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.searchOfferCriteria = @[@"Basisschool (Kleuter + Lager)", @"Kleuterschool", @"Buitengewoon onderwijs", @"Lagere school", @"LO", @"KO"];
+    self.searchOfferCriteria = @[@"Kleuterschool", @"Basisschool (Kleuter + Lager)", @"Buitengewoon onderwijs", @"Lagere school", @"LO", @"KO"];
     self.searchSelectedOfferCriteria = [[NSMutableArray alloc] init];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.view), tableViewHeight) style:UITableViewStyleGrouped];
@@ -79,35 +79,44 @@
 }
 
 - (void) search {
-    if ([self.searchTermTextField.text isEqualToString:@""]) {
-        [[[UIAlertView alloc] initWithTitle:@"Geen zoekterm" message:@"Gelieve een zoekterm in te vullen aub" delegate:self cancelButtonTitle:@"Oke" otherButtonTitles:nil] show];
-    }
-    else if ([self.searchSelectedOfferCriteria count]  == 0) {
-        [[[UIAlertView alloc] initWithTitle:@"Geen aanbod" message:@"Gelieve een aanbod aan te duiden aub" delegate:self cancelButtonTitle:@"Oke" otherButtonTitles:nil] show];
-    }
-    else {
-        self.filteredData = [[NSMutableArray alloc] init];
-        NSString *network = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchNetwork"];
-
-        if (_data) {
-            for (int i = 0; i < [_data count]; i++) {
-                if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound) {
-                    if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
-                        if ([self.searchSelectedOfferCriteria containsObject:[[_data objectAtIndex:i] valueForKey:@"aanbod"]]) {
-                            [_filteredData addObject:[_data objectAtIndex:i]];
-                        }
+    self.filteredData = [[NSMutableArray alloc] init];
+    NSString *network = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchNetwork"];
+    
+    if (_data) {
+        for (int i = 0; i < [_data count]; i++) {
+            if ([self.searchTermTextField.text isEqualToString:@""] && [self.searchSelectedOfferCriteria count] == 0) {
+                if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
+                    [_filteredData addObject:[_data objectAtIndex:i]];
+                }
+            }
+            else if ([self.searchTermTextField.text isEqualToString:@""] && [self.searchSelectedOfferCriteria count] != 0) {
+                if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
+                    if ([self.searchSelectedOfferCriteria containsObject:[[_data objectAtIndex:i] valueForKey:@"aanbod"]]) {
+                        [_filteredData addObject:[_data objectAtIndex:i]];
+                    }
+                }
+            }
+            else if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound && [self.searchSelectedOfferCriteria count] == 0) {
+                if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
+                        [_filteredData addObject:[_data objectAtIndex:i]];
+                    }
+            }
+            else if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound) {
+                if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
+                    if ([self.searchSelectedOfferCriteria containsObject:[[_data objectAtIndex:i] valueForKey:@"aanbod"]]) {
+                        [_filteredData addObject:[_data objectAtIndex:i]];
                     }
                 }
             }
         }
-        
-        if ([self.filteredData count] > 0) {
-            APPSearchResultsViewController *searchResultsVC = [[APPSearchResultsViewController alloc] initWithSchoolData:self.filteredData];
-            [self.navigationController pushViewController:searchResultsVC animated:YES];
-        }
-        else {
-           [[[UIAlertView alloc] initWithTitle:@"Geen scholen gevonden" message:@"Er konden geen scholen gevonden worden met dit zoekcriteria" delegate:self cancelButtonTitle:@"Oke" otherButtonTitles:nil] show];
-        }
+    }
+    if ([self.filteredData count] > 0) {
+        NSLog(@"%i", [self.filteredData count]);
+        APPSearchResultsViewController *searchResultsVC = [[APPSearchResultsViewController alloc] initWithSchoolData:self.filteredData];
+        [self.navigationController pushViewController:searchResultsVC animated:YES];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:@"Geen scholen gevonden" message:@"Er konden geen scholen gevonden worden met dit zoekcriteria" delegate:self cancelButtonTitle:@"Oke" otherButtonTitles:nil] show];
     }
 }
 

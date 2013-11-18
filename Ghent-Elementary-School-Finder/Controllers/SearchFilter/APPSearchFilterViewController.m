@@ -40,7 +40,7 @@
     self.navigationItem.title = @"Schoolzoeker Gent";
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.searchOfferCriteria = @[@"Kleuterschool", @"Basisschool (Kleuter + Lager)", @"Buitengewoon onderwijs", @"Lagere school", @"LO", @"KO"];
+    self.searchOfferCriteria = @[@"Kleuterschool", @"Lagere school", @"Basisschool (Kleuter + Lager)", @"Buitengewoon onderwijs"];
     self.searchSelectedOfferCriteria = [[NSMutableArray alloc] init];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.view), tableViewHeight) style:UITableViewStyleGrouped];
@@ -176,7 +176,7 @@
         return 2;
     }
     else if (section == kSearchOffer) {
-        return 6;
+        return 4;
     }
     return 1;
 }

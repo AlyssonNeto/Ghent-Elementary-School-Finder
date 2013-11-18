@@ -34,36 +34,36 @@
     self.navigationItem.title = @"Schoolzoeker Gent";
     self.view.backgroundColor = [UIColor whiteColor];
     
-    /*self.hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-     self.hud.labelText = @"De data wordt geüpdatet...";
-     [self.hud show:YES];
-     [self.navigationController.view addSubview:self.hud];
-     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-     
-     NSString *documentsDirectory = nil;
-     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-     documentsDirectory = [paths objectAtIndex:0];
-     NSString *filename = @"data-schools.plist";
-     NSString *path = [documentsDirectory stringByAppendingPathComponent:filename];
-     
-     
-     [[APPApiClient sharedClient] getPath:@"Onderwijs&Opvoeding/Basisscholen.json" getParameters:nil getEndpointWithcompletion:^(NSArray *results, NSError *error) {
-     self.hud.mode = MBProgressHUDModeCustomView;
-     if (!error) {
-     self.data = [NSMutableArray arrayWithArray:results];
-     self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
-     self.hud.labelText = @"De data is geupdate!";
-     
-     [self.data writeToFile:path atomically:YES];
-     }
-     else {
-     NSLog(@"Error: %@", error);
-     self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"exclamationmark"]];
-     self.hud.labelText = @"De data is niet geupdate";
-     }
-     [self.hud hide:YES afterDelay:1];
-     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-     }];*/
+    self.hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    self.hud.labelText = @"De data wordt geüpdatet...";
+    [self.hud show:YES];
+    [self.navigationController.view addSubview:self.hud];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    NSString *documentsDirectory = nil;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    documentsDirectory = [paths objectAtIndex:0];
+    NSString *filename = @"data-schools.plist";
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:filename];
+    
+    
+    [[APPApiClient sharedClient] getPath:@"Onderwijs&Opvoeding/Basisscholen.json" getParameters:nil getEndpointWithcompletion:^(NSArray *results, NSError *error) {
+        self.hud.mode = MBProgressHUDModeCustomView;
+        if (!error) {
+            self.data = [NSMutableArray arrayWithArray:results];
+            self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
+            self.hud.labelText = @"De data is geupdate!";
+            
+            [self.data writeToFile:path atomically:YES];
+        }
+        else {
+            NSLog(@"Error: %@", error);
+            self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"exclamationmark"]];
+            self.hud.labelText = @"De data is niet geupdate";
+        }
+        [self.hud hide:YES afterDelay:1];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }];
     
     
     UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 290, 400)];

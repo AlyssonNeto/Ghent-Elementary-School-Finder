@@ -98,8 +98,8 @@
             }
             else if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound && [self.searchSelectedOfferCriteria count] == 0) {
                 if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
-                        [_filteredData addObject:[_data objectAtIndex:i]];
-                    }
+                    [_filteredData addObject:[_data objectAtIndex:i]];
+                }
             }
             else if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound) {
                 if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
@@ -113,6 +113,7 @@
     if ([self.filteredData count] > 0) {
         NSLog(@"%i", [self.filteredData count]);
         APPSearchResultsViewController *searchResultsVC = [[APPSearchResultsViewController alloc] initWithSchoolData:self.filteredData];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Terug" style:UIBarButtonItemStylePlain target:nil action:nil];
         [self.navigationController pushViewController:searchResultsVC animated:YES];
     }
     else {
@@ -140,6 +141,7 @@
     if (indexPath.section == kSearchTerm) {
         if (indexPath.row == 1) {
             APPSearchNetworkViewController *searchNetworkVC = [[APPSearchNetworkViewController alloc] initWithNibName:nil bundle:nil];
+            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Terug" style:UIBarButtonItemStylePlain target:nil action:nil];
             [self.navigationController pushViewController:searchNetworkVC animated:YES];
         }
     }

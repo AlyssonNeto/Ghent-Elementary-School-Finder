@@ -34,7 +34,6 @@
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor whiteColor];
-    
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.view), scrollViewHeight)];
     self.scrollView.delegate = self;
     self.scrollView.backgroundColor = [UIColor whiteColor];

@@ -53,7 +53,6 @@ static BOOL haveAlreadyReceivedCoordinates;
     [refreshControl addTarget:self action:@selector(refreshSchools) forControlEvents:UIControlEventValueChanged];
     [_tableView setRefreshControl:refreshControl];
     
-    
     self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.view), tableViewHeight - 49)];
     [self.mapView setMapType:MKMapTypeStandard];
     [self.mapView setZoomEnabled:YES];
@@ -70,8 +69,6 @@ static BOOL haveAlreadyReceivedCoordinates;
     [self.view addSubview:self.mapView];
     self.mapView.hidden = YES;
     self.mapView.showsUserLocation = YES;
-    
-    // show all annotations in region
 }
 
 -(void)refreshSchools {
@@ -107,6 +104,7 @@ static BOOL haveAlreadyReceivedCoordinates;
                 annotation.tag = i;
                 [self.mapView addAnnotation:annotation];
             }
+            // show all annotations in region
             [self.mapView showAnnotations:self.mapView.annotations animated:YES];
             [self.tableView reloadData];
         });
@@ -153,6 +151,7 @@ static BOOL haveAlreadyReceivedCoordinates;
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     APPAnnotation *annotation = (APPAnnotation*)view.annotation;
     APPSchoolDetailViewController *schoolDetailVC = [[APPSchoolDetailViewController alloc] initWithDetailInformation:[_data objectAtIndex:annotation.tag]];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Terug" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.navigationController pushViewController:schoolDetailVC animated:YES];
 }
 
@@ -177,6 +176,7 @@ static BOOL haveAlreadyReceivedCoordinates;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     APPSchoolDetailViewController *schoolDetailVC = [[APPSchoolDetailViewController alloc] initWithDetailInformation:[_data objectAtIndex:indexPath.row]];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Terug" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.navigationController pushViewController:schoolDetailVC animated:YES];
 }
 

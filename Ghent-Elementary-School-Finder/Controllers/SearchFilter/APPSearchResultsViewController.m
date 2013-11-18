@@ -67,24 +67,11 @@ static BOOL haveAlreadyReceivedCoordinates;
     region.span.longitudeDelta = 0.01f;
     [self.mapView setRegion:region animated:YES];
     
-    
-    for (int i = 0; i < [_data count]; i++) {
-        APPAnnotation *annotation = [[APPAnnotation alloc] init];
-        annotation.lat = [[_data[i] valueForKey:@"lat"] floatValue];
-        annotation.lon = [[_data[i] valueForKey:@"long"] floatValue];
-        annotation.title = [_data[i] valueForKey:@"roepnaam"];
-        annotation.subtitle = [_data[i] valueForKey:@"straat"];
-        annotation.tag = i;
-        [self.mapView addAnnotation:annotation];
-    }
-    
     [self.view addSubview:self.mapView];
     self.mapView.hidden = YES;
     self.mapView.showsUserLocation = YES;
     
     // show all annotations in region
-    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
-    
 }
 
 -(void)refreshSchools {
@@ -111,6 +98,16 @@ static BOOL haveAlreadyReceivedCoordinates;
         }];
         
         dispatch_async( dispatch_get_main_queue(), ^{
+            for (int i = 0; i < [_data count]; i++) {
+                APPAnnotation *annotation = [[APPAnnotation alloc] init];
+                annotation.lat = [[_data[i] valueForKey:@"lat"] floatValue];
+                annotation.lon = [[_data[i] valueForKey:@"long"] floatValue];
+                annotation.title = [_data[i] valueForKey:@"roepnaam"];
+                annotation.subtitle = [_data[i] valueForKey:@"straat"];
+                annotation.tag = i;
+                [self.mapView addAnnotation:annotation];
+            }
+            [self.mapView showAnnotations:self.mapView.annotations animated:YES];
             [self.tableView reloadData];
         });
     });

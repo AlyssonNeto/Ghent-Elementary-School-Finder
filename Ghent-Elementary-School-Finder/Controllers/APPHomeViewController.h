@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import "APPApiClient.h"
+#import <KHFlatButton/KHFlatButton.h>
 
 @interface APPHomeViewController : UIViewController
 

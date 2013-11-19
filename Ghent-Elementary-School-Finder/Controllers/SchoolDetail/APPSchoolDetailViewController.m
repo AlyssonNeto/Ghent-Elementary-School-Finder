@@ -13,8 +13,8 @@
 
 @interface APPSchoolDetailViewController ()
 
-@property (strong, nonatomic) NSArray *detailInfo;
 @property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) NSArray *detailInfo;
 
 @end
 
@@ -34,8 +34,7 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -65,7 +64,11 @@
     UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.view), 600)];
     containerView.backgroundColor = [UIColor whiteColor];
     
+    [containerView.layer addSublayer:[self createBorderWithY:TOP(containerView)]];
+    
     UILabel *nameTitle = [[UILabel alloc] initWithFrame:CGRectMake(25, padding, 270, 40)];
+    nameTitle.numberOfLines = 0;
+    nameTitle.lineBreakMode = NSLineBreakByWordWrapping;
     nameTitle.font = [UIFont boldSystemFontOfSize:18];
     nameTitle.textColor = appColorBlue;
     if ([_detailInfo valueForKey:@"naam"]) {
@@ -96,8 +99,6 @@
     else {
         address.text = [_detailInfo valueForKey:@"straat"];
     }
-    
-    
     [address sizeToFit];
     [containerView addSubview:address];
     
@@ -162,7 +163,7 @@
     }
     else {
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-        UIImage *image;        
+        UIImage *image;
         
         if ([[_detailInfo valueForKey:@"aanbod"] isEqualToString:@"Kleuterschool"]) {
             image = [UIImage imageNamed:@"redPin"];
@@ -177,22 +178,19 @@
             image = [UIImage imageNamed:@"brownPin"];
         }
         else {
-            annotationView.pinColor = MKPinAnnotationColorRed;
+            image = [UIImage imageNamed:@"redPin"];
         }
         
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         
         [annotationView addSubview:imageView];
     }
-    
-    //annotationView.canShowCallout = YES;
     return annotationView;
 }
 
-
 -(CALayer*)createBorderWithY:(CGFloat)y {
     CALayer *border = [CALayer layer];
-    border.frame = CGRectMake(0, y, 320, 2);
+    border.frame = CGRectMake(0, y, 320, 0.5);
     border.backgroundColor = appColorBlue.CGColor;
     return border;
 }

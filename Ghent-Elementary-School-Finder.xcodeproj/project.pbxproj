@@ -11,7 +11,6 @@
 		2B1118CC183A526D0048F293 /* APPPrimarySearchFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1118CB183A526D0048F293 /* APPPrimarySearchFilterViewController.m */; };
 		2B1118CF183A528B0048F293 /* APPSecondarySearchFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1118CE183A528B0048F293 /* APPSecondarySearchFilterViewController.m */; };
 		2B1118D1183A62480048F293 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1118D0183A62480048F293 /* SystemConfiguration.framework */; };
-		2B1118D4183A7A380048F293 /* APPOfferCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1118D3183A7A380048F293 /* APPOfferCell.m */; };
 		2BA9A1751836309100DA7B47 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA9A1741836309100DA7B47 /* Foundation.framework */; };
 		2BA9A1771836309100DA7B47 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA9A1761836309100DA7B47 /* CoreGraphics.framework */; };
 		2BA9A1791836309100DA7B47 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA9A1781836309100DA7B47 /* UIKit.framework */; };
@@ -54,8 +53,6 @@
 		2B1118CD183A528B0048F293 /* APPSecondarySearchFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPSecondarySearchFilterViewController.h; sourceTree = "<group>"; };
 		2B1118CE183A528B0048F293 /* APPSecondarySearchFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPSecondarySearchFilterViewController.m; sourceTree = "<group>"; };
 		2B1118D0183A62480048F293 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		2B1118D2183A7A380048F293 /* APPOfferCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPOfferCell.h; sourceTree = "<group>"; };
-		2B1118D3183A7A380048F293 /* APPOfferCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPOfferCell.m; sourceTree = "<group>"; };
 		2BA9A1711836309100DA7B47 /* Ghent-Elementary-School-Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ghent-Elementary-School-Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA9A1741836309100DA7B47 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2BA9A1761836309100DA7B47 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -213,8 +210,6 @@
 			children = (
 				2BA9A1BF183661DD00DA7B47 /* APPSchoolCell.h */,
 				2BA9A1C0183661DD00DA7B47 /* APPSchoolCell.m */,
-				2B1118D2183A7A380048F293 /* APPOfferCell.h */,
-				2B1118D3183A7A380048F293 /* APPOfferCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -396,7 +391,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B1118D4183A7A380048F293 /* APPOfferCell.m in Sources */,
 				2BA9A1851836309100DA7B47 /* APPAppDelegate.m in Sources */,
 				2BA9A1C1183661DD00DA7B47 /* APPSchoolCell.m in Sources */,
 				2BA9A1811836309100DA7B47 /* main.m in Sources */,

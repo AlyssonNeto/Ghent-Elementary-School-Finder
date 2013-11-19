@@ -8,11 +8,11 @@
 
 #import "APPPrimarySearchFilterViewController.h"
 
-
 @interface APPPrimarySearchFilterViewController ()
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UITextField *searchTermTextField;
+
 @property (strong, nonatomic) NSMutableArray *filteredData;
 @property (strong, nonatomic) NSMutableArray *data;
 
@@ -88,7 +88,6 @@ enum SearchPossibilitiesPrimary {
                 [schoolDict setValue:nil forKey:@"distance"];
                 [_data addObject:schoolDict];
             }
-
             
             self.filteredData = [[NSMutableArray alloc] init];
             NSString *network = [[NSUserDefaults standardUserDefaults] objectForKey:@"searchNetwork"];
@@ -119,6 +118,7 @@ enum SearchPossibilitiesPrimary {
                     }
                 }
             }
+            
             if ([self.filteredData count] > 0) {
                 self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
                 if ([self.filteredData count] == 1) {
@@ -127,7 +127,7 @@ enum SearchPossibilitiesPrimary {
                 else {
                     self.hud.labelText = [NSString stringWithFormat:@"%i scholen gevonden!", [_filteredData count]];
                 }
-
+                
                 APPSearchResultsViewController *searchResultsVC = [[APPSearchResultsViewController alloc] initWithSchoolData:self.filteredData];
                 self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Terug" style:UIBarButtonItemStylePlain target:nil action:nil];
                 [self.navigationController pushViewController:searchResultsVC animated:YES];
@@ -143,7 +143,7 @@ enum SearchPossibilitiesPrimary {
             self.hud.labelText = @"Er ging iets mis..";
             self.hud.detailsLabelText = @"Is er een internetverbinding?";
         }
-        [self.hud hide:YES afterDelay:2];
+        [self.hud hide:YES afterDelay:1];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }];
 }
@@ -164,7 +164,6 @@ enum SearchPossibilitiesPrimary {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if (indexPath.section == kSearchTerm) {
         if (indexPath.row == 1) {
             APPSearchNetworkViewController *searchNetworkVC = [[APPSearchNetworkViewController alloc] initWithNibName:nil bundle:nil];
@@ -197,8 +196,7 @@ enum SearchPossibilitiesPrimary {
     else return @"";
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == kSearchTerm) {
         return 2;
     }
@@ -236,35 +234,24 @@ enum SearchPossibilitiesPrimary {
         }
     }
     else if(indexPath.section == kSearchOffer) {
-        
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(3, CENTER_IN_PARENT_Y(cell, 10), 10, 10)];
         switch (indexPath.row) {
             case 0:
                 cell.imageView.image = [UIImage imageNamed:@"red"];
-                //view.backgroundColor = [UIColor redColor];
                 break;
             case 1:
                 cell.imageView.image = [UIImage imageNamed:@"blue"];
-                //view.backgroundColor = [UIColor blueColor];
                 break;
             case 2:
                 cell.imageView.image = [UIImage imageNamed:@"green"];
-                //view.backgroundColor = [UIColor greenColor];
                 break;
             case 3:
                 cell.imageView.image = [UIImage imageNamed:@"brown"];
-                //view.backgroundColor = [UIColor yellowColor];
                 break;
-                
             default:
                 cell.imageView.image = nil;
-                //view.backgroundColor = [UIColor blackColor];
                 break;
         }
         
-        
-        view.layer.cornerRadius = 5.0f;
-        [cell addSubview:view];
         cell.textLabel.text = [self.searchOfferCriteria objectAtIndex:indexPath.row];
         if ([_searchSelectedOfferCriteria containsObject:cell.textLabel.text]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -273,7 +260,6 @@ enum SearchPossibilitiesPrimary {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
     }
-    
     return cell;
 }
 

@@ -23,9 +23,7 @@
 @property (strong, nonatomic) MBProgressHUD *hud;
 
 enum SearchPossibilitiesSecondary {
-    kSearchTerm = 0,
-    kSearchOffer,
-    kSearchNetwork
+    kSearchTerm = 0
 };
 
 @end
@@ -53,11 +51,9 @@ enum SearchPossibilitiesSecondary {
     [self.view addSubview:self.tableView];
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.tableView), 70)];
-    
     UIButton *searchBtn = [KHFlatButton buttonWithFrame:CGRectMake(10, 0, 300, 50) withTitle:@"Zoeken" backgroundColor:appColorGreen];
     [searchBtn addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:searchBtn];
-    
     self.tableView.tableFooterView = footerView;
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
@@ -120,21 +116,15 @@ enum SearchPossibilitiesSecondary {
             self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"exclamationmark"]];
             self.hud.labelText = @"Er ging iets mis..";
             self.hud.detailsLabelText = @"Is er een internetverbinding?";
-
         }
-        [self.hud hide:YES afterDelay:2];
+        [self.hud hide:YES afterDelay:1];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }];
-    
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    [_tableView reloadData];
 }
 
 #pragma mark TableView Delegate methods
@@ -186,5 +176,4 @@ enum SearchPossibilitiesSecondary {
     }
     return cell;
 }
-
 @end

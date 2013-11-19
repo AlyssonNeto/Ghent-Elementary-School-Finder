@@ -58,11 +58,20 @@ static BOOL haveAlreadyReceivedCoordinates;
     [self.mapView setZoomEnabled:YES];
     [self.mapView setScrollEnabled:YES];
     self.mapView.delegate = self;
+
+    UIImageView *showCurrentLocation = [[UIImageView alloc] initWithFrame:CGRectMake(5,5, 25, 25)];
+    showCurrentLocation.image = [UIImage imageNamed:@"currentLocation"];
+    showCurrentLocation.tintColor = [UIColor whiteColor];
+    [self.mapView addSubview:showCurrentLocation];
     
-    [self.view addSubview:self.mapView];
+    UIButton *showCurrentLocationBtn = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 25, 25)];
+    [showCurrentLocationBtn addTarget:self action:@selector(showCurrentPos) forControlEvents:UIControlEventTouchUpInside];
+    [self.mapView addSubview:showCurrentLocationBtn];
+
     self.mapView.hidden = YES;
     self.mapView.showsUserLocation = YES;
-    
+    [self.view addSubview:self.mapView];
+
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, BOTTOM(self.tableView), WIDTH(self.view), 49)];
     footerView.backgroundColor = appColorBackground;
     
@@ -81,6 +90,14 @@ static BOOL haveAlreadyReceivedCoordinates;
     [footerView addSubview:self.mapButton];
     
     [self.view addSubview:footerView];
+}
+
+-(void)showCurrentPos {
+    MKCoordinateRegion mapRegion;
+    mapRegion.center = _location.coordinate;
+    mapRegion.span.latitudeDelta = 0.05;
+    mapRegion.span.longitudeDelta = 0.05;
+    [self.mapView setRegion:mapRegion animated: YES];
 }
 
 -(void)showList {
@@ -173,8 +190,7 @@ static BOOL haveAlreadyReceivedCoordinates;
         APPAnnotation *appAnnotation = (APPAnnotation *)annotation;
         
         if (annotation == mapView.userLocation) {
-            annotationView.pinColor = MKPinAnnotationColorPurple;
-            image = nil;
+            image = [UIImage imageNamed:@"purplePin"];
         }
         else if ([[[_data objectAtIndex:appAnnotation.tag] valueForKey:@"aanbod"] isEqualToString:@"Kleuterschool"]) {
             image = [UIImage imageNamed:@"redPin"];
@@ -189,7 +205,7 @@ static BOOL haveAlreadyReceivedCoordinates;
             image = [UIImage imageNamed:@"brownPin"];
         }
         else {
-            annotationView.pinColor = MKPinAnnotationColorRed;
+            image = [UIImage imageNamed:@"redPin"];
         }
         
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];

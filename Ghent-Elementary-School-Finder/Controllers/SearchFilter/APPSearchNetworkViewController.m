@@ -16,8 +16,7 @@
 
 @implementation APPSearchNetworkViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.navigationItem.title = @"Net?";
@@ -25,8 +24,7 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.view), tableViewHeight) style:UITableViewStyleGrouped];
@@ -39,8 +37,7 @@
 
 #pragma mark TableView Delegate methods
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 45;
 }
 
@@ -56,8 +53,7 @@
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.searchOfferArray count];
 }
 
@@ -72,7 +68,6 @@
     if ([[self.searchOfferArray objectAtIndex:indexPath.row] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchNetwork"]]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
-    
     return cell;
 }
 

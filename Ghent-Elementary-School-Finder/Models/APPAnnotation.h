@@ -19,7 +19,6 @@
 @property (nonatomic,readwrite, copy) NSString *title;
 @property (nonatomic,readwrite, copy) NSString *subtitle;
 
-
 @property (nonatomic) NSInteger tag;
 
 @end

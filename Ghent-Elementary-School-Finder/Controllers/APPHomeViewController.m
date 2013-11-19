@@ -7,20 +7,16 @@
 //
 
 #import "APPHomeViewController.h"
-#import <KHFlatButton/KHFlatButton.h>
 #import "APPPrimarySearchFilterViewController.h"
 #import "APPSecondarySearchFilterViewController.h"
 
 @interface APPHomeViewController ()
 
-@property (strong, nonatomic) MBProgressHUD *hud;
-
 @end
 
 @implementation APPHomeViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
@@ -28,8 +24,7 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Schoolzoeker Gent";
     self.view.backgroundColor = [UIColor whiteColor];
@@ -43,12 +38,10 @@
     
     UIButton *primaryBtn = [KHFlatButton buttonWithFrame:CGRectMake(CENTER_IN_PARENT_X(self.view, 300), BOTTOM(infoLabel) + 20, 300, 50) withTitle:@"Basisscholen" backgroundColor:appColorGreen];
     [primaryBtn addTarget:self action:@selector(openPrimarySearchView) forControlEvents:UIControlEventTouchUpInside];
-
     [self.view addSubview:primaryBtn];
     
     UIButton *secondaryBtn = [KHFlatButton buttonWithFrame:CGRectMake(CENTER_IN_PARENT_X(self.view, 300), BOTTOM(primaryBtn) + 20, 300, 50) withTitle:@"Secundaire scholen" backgroundColor:appColorGreen];
     [secondaryBtn addTarget:self action:@selector(openSecondarySearchView) forControlEvents:UIControlEventTouchUpInside];
-
     [self.view addSubview:secondaryBtn];
 }
 

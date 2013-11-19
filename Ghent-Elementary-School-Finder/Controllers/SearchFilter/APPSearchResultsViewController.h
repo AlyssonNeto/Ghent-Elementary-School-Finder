@@ -14,7 +14,6 @@
 #import "APPSchoolDetailViewController.h"
 #import "APPAnnotation.h"
 
-
 @interface APPSearchResultsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, MKMapViewDelegate>
 
 -(id)initWithSchoolData:(NSMutableArray *)data;

@@ -1,9 +1,9 @@
 //
-//  EVARestoCell.m
-//  EVA
+//  APPSchoolCell.h
+//  Ghent-Elementary-School-Finder
 //
-//  Created by Jarno Verreyt on 6/11/13.
-//  Copyright (c) 2013 Tim Leytens. All rights reserved.
+//  Created by Jarno Verreyt on 15/11/13.
+//  Copyright (c) 2013 Appreciate. All rights reserved.
 //
 
 #import "APPSchoolCell.h"
@@ -17,14 +17,11 @@
 
 @end
 
-
 @implementation APPSchoolCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
         self.titleLabel = [[UILabel alloc] init];
         self.titleLabel.textColor = [UIColor darkGrayColor];
         self.titleLabel.highlightedTextColor = [UIColor whiteColor];
@@ -68,11 +65,11 @@
         CGRect frame = self.titleLabel.frame;
         frame.size.width = 210;
         self.titleLabel.frame = frame;
-        [self.distanceLabel setText:[self getDistanceToResto]];
+        [self.distanceLabel setText:[self getDistanceToSchool]];
     }
 }
 
--(NSString *)getDistanceToResto {
+-(NSString *)getDistanceToSchool {
     NSString *distance;
     
     if ([self.valuesDict objectForKey:@"distance"] && [[self.valuesDict objectForKey:@"distance"] intValue] < 100000 && [[self.valuesDict objectForKey:@"distance"] intValue] > 0) {

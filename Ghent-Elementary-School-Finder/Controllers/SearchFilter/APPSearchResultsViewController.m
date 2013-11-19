@@ -125,8 +125,8 @@ static BOOL haveAlreadyReceivedCoordinates;
 -(void)orderResponseDataByDistance {
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (id school in _data) {
-            CLLocation *restoLocation = [[CLLocation alloc] initWithLatitude:[[school objectForKey:@"lat"] floatValue] longitude:[[school objectForKey:@"long"] floatValue]];
-            CLLocationDistance meters = [restoLocation distanceFromLocation:_location];
+            CLLocation *schoolLocation = [[CLLocation alloc] initWithLatitude:[[school objectForKey:@"lat"] floatValue] longitude:[[school objectForKey:@"long"] floatValue]];
+            CLLocationDistance meters = [schoolLocation distanceFromLocation:_location];
             [school setValue:[NSNumber numberWithInt:(int)meters] forKey:@"distance"];
         }
         

@@ -22,7 +22,6 @@ PODS:
   - MDCParallaxView (0.1.4)
   - PHFRefreshControl (1.0.0)
   - TBMacros (0.2)
-  - TTTAttributedLabel (1.7.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0.2)
@@ -31,7 +30,6 @@ DEPENDENCIES:
   - MDCParallaxView (~> 0.1.4)
   - PHFRefreshControl (~> 1.0.0)
   - TBMacros (~> 0.2)
-  - TTTAttributedLabel (~> 1.7.1)
 
 SPEC CHECKSUMS:
   AFNetworking: e663917201cdb73f4ad2ba239ad35be8dc9a1e3c
@@ -40,6 +38,5 @@ SPEC CHECKSUMS:
   MDCParallaxView: a1aea11598439a6c20864e7bec23aa595464475b
   PHFRefreshControl: b000ab0b2e7c038fd82565dfa6d0cc39f2a6edca
   TBMacros: 59eeb31662b87ee404639cd7c68192d9451a3952
-  TTTAttributedLabel: 05705051ca22a48f6ca72b64f301516e357b6814
 
 COCOAPODS: 0.27.1

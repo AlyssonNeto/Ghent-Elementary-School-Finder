@@ -9,6 +9,7 @@
 #import "APPSearchNetworkViewController.h"
 
 @interface APPSearchNetworkViewController ()
+
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSArray *searchOfferArray;
 

@@ -35,8 +35,8 @@ static BOOL haveAlreadyReceivedCoordinates;
     }
     return self;
 }
-- (void)viewDidLoad
-{
+
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -58,7 +58,7 @@ static BOOL haveAlreadyReceivedCoordinates;
     [self.mapView setZoomEnabled:YES];
     [self.mapView setScrollEnabled:YES];
     self.mapView.delegate = self;
-
+    
     UIImageView *showCurrentLocation = [[UIImageView alloc] initWithFrame:CGRectMake(5,5, 25, 25)];
     showCurrentLocation.image = [UIImage imageNamed:@"currentLocation"];
     showCurrentLocation.tintColor = [UIColor whiteColor];
@@ -67,11 +67,11 @@ static BOOL haveAlreadyReceivedCoordinates;
     UIButton *showCurrentLocationBtn = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 25, 25)];
     [showCurrentLocationBtn addTarget:self action:@selector(showCurrentPos) forControlEvents:UIControlEventTouchUpInside];
     [self.mapView addSubview:showCurrentLocationBtn];
-
+    
     self.mapView.hidden = YES;
     self.mapView.showsUserLocation = YES;
     [self.view addSubview:self.mapView];
-
+    
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, BOTTOM(self.tableView), WIDTH(self.view), 49)];
     footerView.backgroundColor = appColorBackground;
     
@@ -160,7 +160,6 @@ static BOOL haveAlreadyReceivedCoordinates;
             [self.tableView reloadData];
         });
     });
-    
 }
 
 - (CLLocationManager *)locationManager {
@@ -169,14 +168,12 @@ static BOOL haveAlreadyReceivedCoordinates;
         _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
         _locationManager.delegate = self;
     }
-    
     return _locationManager;
 }
 
 #pragma mark - MKMapView Delegate methods
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
     static NSString * const identifier = @"Identifier";
     MKPinAnnotationView* annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
     
@@ -249,8 +246,7 @@ static BOOL haveAlreadyReceivedCoordinates;
 
 #pragma mark - TableView Delegate methods
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 45;
 }
 
@@ -267,8 +263,7 @@ static BOOL haveAlreadyReceivedCoordinates;
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_data count];
 }
 

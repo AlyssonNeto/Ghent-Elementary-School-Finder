@@ -78,7 +78,6 @@
         nameTitle.text = [_detailInfo valueForKey:@"roepnaam"];
     }
     
-    
     [nameTitle sizeToFit];
     [containerView addSubview:nameTitle];
     
@@ -153,8 +152,7 @@
     [self.view addSubview:parallaxView];
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
     static NSString * const identifier = @"Identifier";
     MKPinAnnotationView* annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
     
@@ -195,8 +193,7 @@
     return border;
 }
 
-- (void)showRoute
-{
+- (void)showRoute {
     Class mapItemClass = [MKMapItem class];
     if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)])
     {
@@ -204,7 +201,13 @@
         MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate
                                                        addressDictionary:nil];
         MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-        [mapItem setName:[_detailInfo valueForKey:@"roepnaam"]];
+        
+        if ([_detailInfo valueForKey:@"naam"]) {
+            [mapItem setName:[_detailInfo valueForKey:@"naam"]];
+        }
+        else {
+            [mapItem setName:[_detailInfo valueForKey:@"roepnaam"]];
+        }
         
         NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};
         MKMapItem *currentLocationMapItem = [MKMapItem mapItemForCurrentLocation];
@@ -212,11 +215,4 @@
                        launchOptions:launchOptions];
     }
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 @end

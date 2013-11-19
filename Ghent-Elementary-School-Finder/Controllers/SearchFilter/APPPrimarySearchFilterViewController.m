@@ -23,24 +23,21 @@
 
 enum SearchPossibilitiesPrimary {
     kSearchTerm = 0,
-    kSearchOffer,
-    kSearchNetwork
+    kSearchOffer
 };
 
 @end
 
 @implementation APPPrimarySearchFilterViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Schoolzoeker Gent";
     self.view.backgroundColor = [UIColor whiteColor];

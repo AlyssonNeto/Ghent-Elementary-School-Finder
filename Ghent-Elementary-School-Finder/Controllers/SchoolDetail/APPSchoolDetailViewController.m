@@ -152,6 +152,44 @@
     [self.view addSubview:parallaxView];
 }
 
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    static NSString * const identifier = @"Identifier";
+    MKPinAnnotationView* annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+    
+    if (annotationView) {
+        annotationView.annotation = annotation;
+    }
+    else {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+        UIImage *image;        
+        
+        if ([[_detailInfo valueForKey:@"aanbod"] isEqualToString:@"Kleuterschool"]) {
+            image = [UIImage imageNamed:@"redPin"];
+        }
+        else if ([[_detailInfo valueForKey:@"aanbod"] isEqualToString:@"Lagere school"]) {
+            image = [UIImage imageNamed:@"bluePin"];
+        }
+        else if ([[_detailInfo valueForKey:@"aanbod"] isEqualToString:@"Basisschool (Kleuter + Lager)"]) {
+            image = [UIImage imageNamed:@"greenPin"];
+        }
+        else if ([[_detailInfo valueForKey:@"aanbod"] isEqualToString:@"Buitengewoon onderwijs"]) {
+            image = [UIImage imageNamed:@"brownPin"];
+        }
+        else {
+            annotationView.pinColor = MKPinAnnotationColorRed;
+        }
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        
+        [annotationView addSubview:imageView];
+    }
+    
+    //annotationView.canShowCallout = YES;
+    return annotationView;
+}
+
+
 -(CALayer*)createBorderWithY:(CGFloat)y {
     CALayer *border = [CALayer layer];
     border.frame = CGRectMake(0, y, 320, 2);

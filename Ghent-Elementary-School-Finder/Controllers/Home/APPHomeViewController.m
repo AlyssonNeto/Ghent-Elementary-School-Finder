@@ -21,7 +21,7 @@
 #define LINE_HEIGHT 10
 
 #define CUSTOM_HEIGHT_BUTTON 50
-#define CUSTOM_WIDTH_BUTTON WIDTH(self.view) - MARGIN_LEFT_BUTTON * 2
+#define CUSTOM_WIDTH_BUTTON WIDTH(self.view) - MARGIN_LEFT_BUTTON
 
 @interface APPHomeViewController ()
 
@@ -47,23 +47,23 @@
         imageView = [[UIImageView alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_FIRST_ITEM_TOP, 280, 57)];
     }
     else {
-        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_FIRST_ITEM_TOP / 2, 280, 57)];
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_FIRST_ITEM_TOP, 280, 57)];
     }
     
     imageView.image = [UIImage imageNamed:@"schoollocator_logo"];
     [self.view addSubview:imageView];
     
-    APPSchoolCategoryButton *kleuter_btn = [[APPSchoolCategoryButton alloc] initWithFrame:CGRectMake(MARGIN_LEFT_BUTTON, BOTTOM(imageView) + MARGIN_BOTTOM, CUSTOM_WIDTH_BUTTON, CUSTOM_HEIGHT_BUTTON) andTitle:@"kleuterscholen" andImage:[UIImage imageNamed:@"kleuter_icon"]];
+    APPSchoolCategoryButton *kleuter_btn = [[APPSchoolCategoryButton alloc] initWithFrame:CGRectMake(MARGIN_LEFT_BUTTON/2, BOTTOM(imageView) + MARGIN_BOTTOM * 2, CUSTOM_WIDTH_BUTTON, CUSTOM_HEIGHT_BUTTON) andTitle:@"kleuter- en basisscholen" andImage:[UIImage imageNamed:@"kleuter_icon"]];
     kleuter_btn.tag = 1;
     [kleuter_btn addTarget:self action:@selector(openSchoolCategory:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:kleuter_btn];
     
-    APPSchoolCategoryButton *lager_btn = [[APPSchoolCategoryButton alloc] initWithFrame:CGRectMake(MARGIN_LEFT_BUTTON, BOTTOM(kleuter_btn) + MARGIN_BOTTOM, CUSTOM_WIDTH_BUTTON, CUSTOM_HEIGHT_BUTTON) andTitle:@"basisscholen" andImage:[UIImage imageNamed:@"lager_icon"]];
-    lager_btn.tag = 2;
-    [lager_btn addTarget:self action:@selector(openSchoolCategory:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:lager_btn];
+//    APPSchoolCategoryButton *lager_btn = [[APPSchoolCategoryButton alloc] initWithFrame:CGRectMake(MARGIN_LEFT_BUTTON, BOTTOM(kleuter_btn) + MARGIN_BOTTOM, CUSTOM_WIDTH_BUTTON, CUSTOM_HEIGHT_BUTTON) andTitle:@"basisscholen" andImage:[UIImage imageNamed:@"lager_icon"]];
+//    lager_btn.tag = 2;
+//    [lager_btn addTarget:self action:@selector(openSchoolCategory:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:lager_btn];
     
-    APPSchoolCategoryButton *middelbaar_btn = [[APPSchoolCategoryButton alloc] initWithFrame:CGRectMake(MARGIN_LEFT_BUTTON, BOTTOM(lager_btn) + MARGIN_BOTTOM, CUSTOM_WIDTH_BUTTON, CUSTOM_HEIGHT_BUTTON) andTitle:@"secundaire scholen" andImage:[UIImage imageNamed:@"middelbaar_icon"]];
+    APPSchoolCategoryButton *middelbaar_btn = [[APPSchoolCategoryButton alloc] initWithFrame:CGRectMake(MARGIN_LEFT_BUTTON/2, BOTTOM(kleuter_btn) + MARGIN_BOTTOM * 2, CUSTOM_WIDTH_BUTTON, CUSTOM_HEIGHT_BUTTON) andTitle:@"secundaire scholen" andImage:[UIImage imageNamed:@"middelbaar_icon"]];
     middelbaar_btn.tag = 3;
     [middelbaar_btn addTarget:self action:@selector(openSchoolCategory:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:middelbaar_btn];
@@ -83,10 +83,10 @@
     
     switch (sender.tag) {
         case 1:
-            viewController = [[APPPrimarySearchFilterViewController alloc] initWithNibName:nil bundle:nil];
+            viewController = [[APPPrimarySearchFilterViewController alloc] initWithTag:sender.tag];
             break;
         case 2:
-            NSLog(@"lager");
+            viewController = [[APPPrimarySearchFilterViewController alloc] initWithTag:sender.tag];
             break;
         case 3:
             viewController = [[APPSecondarySearchFilterViewController alloc] initWithNibName:nil bundle:nil];

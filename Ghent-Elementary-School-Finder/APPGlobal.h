@@ -18,6 +18,8 @@
 #define CELL_BACKGROUND UIColorFromHex(0xfcfcfc)
 #define CELL_DETAIL_TEXTCOLOR UIColorFromHex(0xc6c6c6)
 
+#define SELECTED_GREEN UIColorFromHex(0x56d89e)
+
 #define GREEN UIColorFromHex(0x4ae09d)
 #define PINK UIColorFromHex(0xfd8bfc)
 #define ORANGE UIColorFromHex(0xffcb40)

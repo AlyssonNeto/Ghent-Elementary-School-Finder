@@ -20,7 +20,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.navigationItem.title = @"Net?";
+        self.navigationItem.title = @"Net";
     }
     return self;
 }
@@ -31,6 +31,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.view), tableViewHeight) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.tableView];
     
     self.searchOfferArray = @[@"Alles", @"Katholiek onderwijs", @"Onderwijs Stad Gent", @"Overleg kleine onderwijsverstrekkers", @"GO!Onderwijs van de Vlaamse gemeenschap"];
@@ -63,8 +64,9 @@
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"CellIdentifier"];
+        cell.backgroundColor = CELL_BACKGROUND;
     }
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.textLabel.font = [UIFont fontWithName:AVENIR_ROMAN size:16];
     cell.textLabel.text = [self.searchOfferArray objectAtIndex:indexPath.row];
     if ([[self.searchOfferArray objectAtIndex:indexPath.row] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"searchNetwork"]]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

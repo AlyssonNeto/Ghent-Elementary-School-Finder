@@ -22,17 +22,19 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.titleLabel = [[UILabel alloc] init];
+        self.backgroundColor = CELL_BACKGROUND;
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, CENTER_IN_PARENT_Y(self, 20), WIDTH(self) - 95, 20)];
         self.titleLabel.textColor = [UIColor darkGrayColor];
         self.titleLabel.highlightedTextColor = [UIColor whiteColor];
-        self.titleLabel.backgroundColor = [UIColor clearColor];
+        self.titleLabel.font = [UIFont fontWithName:AVENIR_ROMAN size:16];
         [self.contentView addSubview:self.titleLabel];
         
-        self.distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 25, 100, 20)];
-        [self.distanceLabel setFont:[UIFont systemFontOfSize:12]];
-        self.distanceLabel.textColor = [UIColor lightGrayColor];
+        self.distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(RIGHT(self) - 85, CENTER_IN_PARENT_Y(self, 16), 50, 16)];
+        self.distanceLabel.textColor = CELL_DETAIL_TEXTCOLOR;
         self.distanceLabel.highlightedTextColor = [UIColor whiteColor];
-        self.distanceLabel.backgroundColor = [UIColor clearColor];
+        
+        self.distanceLabel.textAlignment = NSTextAlignmentRight;
+        self.distanceLabel.font = [UIFont fontWithName:AVENIR_ROMAN size:16];
         [self.contentView addSubview:self.distanceLabel];
         
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -56,15 +58,9 @@
     }
     
     if ([[values objectForKey:@"distance"] intValue] == 0) {
-        self.titleLabel.frame = CGRectMake(15, 0, 250, 45);
         [self.distanceLabel setText:@""];
     }
     else {
-        self.titleLabel.frame = CGRectMake(15, 5, 250, 45);
-        [self.titleLabel sizeToFit];
-        CGRect frame = self.titleLabel.frame;
-        frame.size.width = 210;
-        self.titleLabel.frame = frame;
         [self.distanceLabel setText:[self getDistanceToSchool]];
     }
 }

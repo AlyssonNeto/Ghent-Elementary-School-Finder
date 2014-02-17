@@ -21,18 +21,23 @@
 
 @property (strong, nonatomic) MBProgressHUD *hud;
 
+@property (nonatomic) NSInteger tag;
+
 enum SearchPossibilitiesPrimary {
     kSearchTerm = 0,
     kSearchOffer
 };
 
+//enum Search
+
 @end
 
 @implementation APPPrimarySearchFilterViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+-(id)initWithTag:(NSInteger)tag {
+    self = [super init];
     if (self) {
+        _tag = tag;
     }
     return self;
 }
@@ -76,7 +81,7 @@ enum SearchPossibilitiesPrimary {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, CENTER_IN_PARENT_Y(view, 36), tableView.frame.size.width, 36)];
     [label setFont:[UIFont fontWithName:AVENIR_BLACK size:20]];
     if (section == 0) {
-            [label setText:@"IN DE BUURT"];
+        [label setText:@"IN DE BUURT"];
     }
     else {
         [label setText:@"AANBOD"];
@@ -126,92 +131,43 @@ enum SearchPossibilitiesPrimary {
                 }
             }
             
+            NSMutableArray *step2 = [[NSMutableArray alloc] initWithArray:_filteredData];
             
-            
-            for (int i = 0; i < [_filteredData count]; i++) {
-                NSLog(@"Net: %@", network);
-                NSLog(@"net: %@", [[_filteredData objectAtIndex:i] valueForKey:@"net"]);
+            for (NSDictionary *school in _filteredData) {
                 if (![network isEqualToString:@"Alles"]) {
-                    
-                    if (![[[_filteredData objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
-                        [_filteredData removeObject:[_data objectAtIndex:i]];
+                    if (![[school valueForKey:@"net"] isEqualToString:network]) {
+                        [step2 removeObject:school];
                     }
                 }
             }
             
-            for (int i = 0; i < [_filteredData count]; i++) {
+            NSMutableArray *step3 = [[NSMutableArray alloc] initWithArray:step2];
+            
+            for (NSDictionary *school in step2) {
                 if ([self.searchSelectedOfferCriteria count] != 0) {
-                    if (![self.searchSelectedOfferCriteria containsObject:[[_data objectAtIndex:i] valueForKey:@"aanbod"]]) {
-                        [_filteredData removeObject:[_data objectAtIndex:i]];
+                    if (![self.searchSelectedOfferCriteria containsObject:[school valueForKey:@"aanbod"]]) {
+                        [step3 removeObject:school];
                     }
                 }
             }
             
-            
-            
-            /*                if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound) {
-             
-             }
-             else {
-             _filteredData addObject:[_data objectAtIndex:i];
-             }
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             if ([self.searchTermTextField.text isEqualToString:@""] && [self.searchSelectedOfferCriteria count] == 0 && [network isEqualToString:@"Alles"]) {
-             [_filteredData addObject:[_data objectAtIndex:i]];
-             }
-             else if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound && [self.searchSelectedOfferCriteria count] == 0 && [network isEqualToString:@"Alles"]){
-             [_filteredData addObject:[_data objectAtIndex:i]];
-             }
-             else if () {
-             
-             }
-             else if ([self.searchTermTextField.text isEqualToString:@""] && [self.searchSelectedOfferCriteria count] != 0) {
-             if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
-             if ([self.searchSelectedOfferCriteria containsObject:[[_data objectAtIndex:i] valueForKey:@"aanbod"]]) {
-             [_filteredData addObject:[_data objectAtIndex:i]];
-             }
-             }
-             }
-             else if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound && [self.searchSelectedOfferCriteria count] == 0) {
-             if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
-             [_filteredData addObject:[_data objectAtIndex:i]];
-             }
-             }
-             else if ([[[[_data objectAtIndex:i] valueForKey:@"roepnaam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]].location != NSNotFound) {
-             if ([[[_data objectAtIndex:i] valueForKey:@"net"] isEqualToString:network]) {
-             if ([self.searchSelectedOfferCriteria containsObject:[[_data objectAtIndex:i] valueForKey:@"aanbod"]]) {
-             [_filteredData addObject:[_data objectAtIndex:i]];
-             }
-             }
-             }
-             }
-             
-             if ([self.filteredData count] > 0) {
-             self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
-             if ([self.filteredData count] == 1) {
-             self.hud.labelText = @"1 school gevonden!";
-             }
-             else {
-             self.hud.labelText = [NSString stringWithFormat:@"%i scholen gevonden!", [_filteredData count]];
-             }
-             
-             
-             }
-             else {
-             [self.hud hide:YES];
-             [[[UIAlertView alloc] initWithTitle:@"Geen scholen gevonden" message:@"Er konden geen scholen gevonden worden met dit zoekcriteria" delegate:self cancelButtonTitle:@"Oke" otherButtonTitles:nil] show];
-             }*/
-            APPSearchResultsViewController *searchResultsVC = [[APPSearchResultsViewController alloc] initWithSchoolData:self.filteredData];
-            self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Terug" style:UIBarButtonItemStylePlain target:nil action:nil];
-            [self.navigationController pushViewController:searchResultsVC animated:YES];
+            if ([step3 count] > 0) {
+                self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
+                if ([step3 count] == 1) {
+                    self.hud.labelText = @"1 school gevonden!";
+                }
+                else {
+                    self.hud.labelText = [NSString stringWithFormat:@"%i scholen gevonden!", [step3 count]];
+                }
+                
+                APPSearchResultsViewController *searchResultsVC = [[APPSearchResultsViewController alloc] initWithSchoolData:step3];
+                self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Terug" style:UIBarButtonItemStylePlain target:nil action:nil];
+                [self.navigationController pushViewController:searchResultsVC animated:YES];
+            }
+            else {
+                [self.hud hide:YES];
+                [[[UIAlertView alloc] initWithTitle:@"Geen scholen gevonden" message:@"Er konden geen scholen gevonden worden met dit zoekcriteria" delegate:self cancelButtonTitle:@"Oke" otherButtonTitles:nil] show];
+            }
         }
         else {
             NSLog(@"Error: %@", error);
@@ -291,6 +247,9 @@ enum SearchPossibilitiesPrimary {
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
+        cell.textLabel.font = [UIFont fontWithName:AVENIR_ROMAN size:16];
+        cell.detailTextLabel.font = [UIFont fontWithName:AVENIR_ROMAN size:16];
+        cell.detailTextLabel.textColor = CELL_DETAIL_TEXTCOLOR;
     }
     
     if (indexPath.section == kSearchTerm) {
@@ -299,12 +258,14 @@ enum SearchPossibilitiesPrimary {
             self.searchTermTextField = (UITextField *)[cell.contentView viewWithTag:1];
             
             if (!self.searchTermTextField) {
-                self.searchTermTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, CENTER_IN_PARENT_Y(cell.contentView, 35), 290, 35)];
+                self.searchTermTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, CENTER_IN_PARENT_Y(cell, 35) + 2, 290, 35)];
             }
             self.searchTermTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
             self.searchTermTextField.delegate = self;
             self.searchTermTextField.placeholder = @"Zoekterm";
             self.searchTermTextField.tag = 1;
+            self.searchTermTextField.font = [UIFont fontWithName:AVENIR_ROMAN size:16];
+            self.searchTermTextField.textColor = CELL_DETAIL_TEXTCOLOR;
             [cell.contentView addSubview:self.searchTermTextField];
         }
         else {

@@ -73,23 +73,39 @@ static BOOL haveAlreadyReceivedCoordinates;
     [self.view addSubview:self.mapView];
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, BOTTOM(self.tableView), WIDTH(self.view), 49)];
-    footerView.backgroundColor = GREEN;
+    
     
     self.listButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.view) / 2, 49)];
-    [self.listButton setImage:[UIImage imageNamed:@"list"] forState:UIControlStateSelected];
-    [self.listButton setImage:[UIImage imageNamed:@"list-inactive"] forState:UIControlStateNormal];
-    self.listButton.selected = YES;
+    [self.listButton setImage:[UIImage imageNamed:@"list"] forState:UIControlStateNormal];
+    [self.listButton setBackgroundImage:[self imageWithColor:GREEN] forState:UIControlStateNormal];
+    [self.listButton setBackgroundImage:[self imageWithColor:SELECTED_GREEN] forState:UIControlStateSelected];
     [self.listButton addTarget:self action:@selector(showList) forControlEvents:UIControlEventTouchUpInside];
+    self.listButton.selected = YES;
     
     self.mapButton = [[UIButton alloc] initWithFrame:CGRectMake(WIDTH(self.view)/2, 0, WIDTH(self.view) / 2, 49)];
-    [self.mapButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateSelected];
-    [self.mapButton setImage:[UIImage imageNamed:@"location-inactive"] forState:UIControlStateNormal];
+    [self.mapButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
+    [self.mapButton setBackgroundImage:[self imageWithColor:GREEN] forState:UIControlStateNormal];
+    [self.mapButton setBackgroundImage:[self imageWithColor:SELECTED_GREEN] forState:UIControlStateSelected];
     [self.mapButton addTarget:self action:@selector(showMap) forControlEvents:UIControlEventTouchUpInside];
     
     [footerView addSubview:self.listButton];
     [footerView addSubview:self.mapButton];
     
     [self.view addSubview:footerView];
+}
+
+- (UIImage *)imageWithColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 -(void)showCurrentPos {
@@ -290,7 +306,10 @@ static BOOL haveAlreadyReceivedCoordinates;
     if (cell == nil) {
         cell = [[APPSchoolCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    
     [cell setValues:[_data objectAtIndex:indexPath.row]];
+    
     return cell;
 }
+
 @end

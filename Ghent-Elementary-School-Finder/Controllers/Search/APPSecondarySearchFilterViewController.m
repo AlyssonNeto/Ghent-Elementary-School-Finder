@@ -87,7 +87,6 @@ enum SearchPossibilitiesSecondary {
             }
             self.filteredData = [[NSMutableArray alloc] init];
             
-            
             for (int i = 0; i < [_data count]; i++) {
                 NSRange range = [[[[_data objectAtIndex:i] valueForKey:@"naam"] lowercaseString] rangeOfString:[self.searchTermTextField.text lowercaseString]];
                 if ([self.searchTermTextField.text isEqualToString:@""]) {
@@ -187,7 +186,7 @@ enum SearchPossibilitiesSecondary {
             self.searchTermTextField = (UITextField *)[cell.contentView viewWithTag:1];
             
             if (!self.searchTermTextField) {
-                self.searchTermTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, CENTER_IN_PARENT_Y(cell.contentView, 35), 290, 35)];
+                self.searchTermTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, CENTER_IN_PARENT_Y(cell, 35) + 2, 290, 35)];
             }
             self.searchTermTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
             self.searchTermTextField.delegate = self;

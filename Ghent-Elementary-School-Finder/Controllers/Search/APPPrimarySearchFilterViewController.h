@@ -16,4 +16,6 @@
 
 @interface APPPrimarySearchFilterViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MBProgressHUDDelegate>
 
+-(id)initWithTag:(NSInteger)tag;
+
 @end

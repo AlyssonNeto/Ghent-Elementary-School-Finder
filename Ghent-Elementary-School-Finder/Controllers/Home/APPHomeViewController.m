@@ -53,7 +53,7 @@
     imageView.image = [UIImage imageNamed:@"schoollocator_logo"];
     [self.view addSubview:imageView];
     
-    APPSchoolCategoryButton *kleuter_btn = [[APPSchoolCategoryButton alloc] initWithFrame:CGRectMake(MARGIN_LEFT_BUTTON/2, BOTTOM(imageView) + MARGIN_BOTTOM * 2, CUSTOM_WIDTH_BUTTON, CUSTOM_HEIGHT_BUTTON) andTitle:@"kleuter- en basisscholen" andImage:[UIImage imageNamed:@"kleuter_icon"]];
+    APPSchoolCategoryButton *kleuter_btn = [[APPSchoolCategoryButton alloc] initWithFrame:CGRectMake(MARGIN_LEFT_BUTTON/2, BOTTOM(imageView) + MARGIN_BOTTOM * 2, CUSTOM_WIDTH_BUTTON, CUSTOM_HEIGHT_BUTTON) andTitle:@"kleuter- en basisscholen" andImage:[UIImage imageNamed:@"basis_lager_icon"]];
     kleuter_btn.tag = 1;
     [kleuter_btn addTarget:self action:@selector(openSchoolCategory:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:kleuter_btn];

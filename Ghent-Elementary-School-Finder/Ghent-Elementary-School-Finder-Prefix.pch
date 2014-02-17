@@ -12,7 +12,7 @@
 
 #define tableViewHeight HEIGHT(self.view) - HEIGHT(self.tabBarController.tabBar) - HEIGHT(self.navigationController.navigationBar) - [UIApplication sharedApplication].statusBarFrame.size.height
 #define scrollViewHeight HEIGHT(self.view) - HEIGHT(self.tabBarController.tabBar) - HEIGHT(self.navigationController.navigationBar) - [UIApplication sharedApplication].statusBarFrame.size.height
-#define appColorBlue UIColorFromHex(0x6190AF)
+#define appColorBlue UIColorFromHex(0x303CA3)
 #define appColorGreen UIColorFromHex(0x59BB77)
 #define appColorBackground UIColorFromHex(0xF8F3F0)
 

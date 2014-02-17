@@ -20,4 +20,5 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <TBMacros/Macros.h>
+    #import "APPGlobal.h"
 #endif

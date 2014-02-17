@@ -56,11 +56,11 @@
     }
     
     if ([[values objectForKey:@"distance"] intValue] == 0) {
-        self.titleLabel.frame = CGRectMake(15, 0, 210, 45);
+        self.titleLabel.frame = CGRectMake(15, 0, 250, 45);
         [self.distanceLabel setText:@""];
     }
     else {
-        self.titleLabel.frame = CGRectMake(15, 5, 210, 45);
+        self.titleLabel.frame = CGRectMake(15, 5, 250, 45);
         [self.titleLabel sizeToFit];
         CGRect frame = self.titleLabel.frame;
         frame.size.width = 210;

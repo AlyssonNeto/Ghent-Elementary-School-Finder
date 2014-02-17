@@ -11,6 +11,8 @@
 		2B1118CC183A526D0048F293 /* APPPrimarySearchFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1118CB183A526D0048F293 /* APPPrimarySearchFilterViewController.m */; };
 		2B1118CF183A528B0048F293 /* APPSecondarySearchFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1118CE183A528B0048F293 /* APPSecondarySearchFilterViewController.m */; };
 		2B1118D1183A62480048F293 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1118D0183A62480048F293 /* SystemConfiguration.framework */; };
+		2B6542D318AA715A004A5348 /* APPSchoolCategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6542D218AA715A004A5348 /* APPSchoolCategoryButton.m */; };
+		2B86A728183E1DCC00593BCC /* APPHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B86A727183E1DCC00593BCC /* APPHomeViewController.m */; };
 		2BA9A1751836309100DA7B47 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA9A1741836309100DA7B47 /* Foundation.framework */; };
 		2BA9A1771836309100DA7B47 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA9A1761836309100DA7B47 /* CoreGraphics.framework */; };
 		2BA9A1791836309100DA7B47 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA9A1781836309100DA7B47 /* UIKit.framework */; };
@@ -22,7 +24,6 @@
 		2BA9A1901836309100DA7B47 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA9A1781836309100DA7B47 /* UIKit.framework */; };
 		2BA9A1981836309100DA7B47 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BA9A1961836309100DA7B47 /* InfoPlist.strings */; };
 		2BA9A19A1836309100DA7B47 /* Ghent_Elementary_School_FinderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9A1991836309100DA7B47 /* Ghent_Elementary_School_FinderTests.m */; };
-		2BA9A1A91836319300DA7B47 /* APPHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9A1A81836319300DA7B47 /* APPHomeViewController.m */; };
 		2BA9A1AC1836322E00DA7B47 /* APPNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9A1AB1836322E00DA7B47 /* APPNavViewController.m */; };
 		2BA9A1B818363D3C00DA7B47 /* APPSearchNetworkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9A1B718363D3C00DA7B47 /* APPSearchNetworkViewController.m */; };
 		2BA9A1BB183645F900DA7B47 /* APPApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9A1BA183645F900DA7B47 /* APPApiClient.m */; };
@@ -53,6 +54,11 @@
 		2B1118CD183A528B0048F293 /* APPSecondarySearchFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPSecondarySearchFilterViewController.h; sourceTree = "<group>"; };
 		2B1118CE183A528B0048F293 /* APPSecondarySearchFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPSecondarySearchFilterViewController.m; sourceTree = "<group>"; };
 		2B1118D0183A62480048F293 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2B65429218AA6A6B004A5348 /* APPGlobal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPGlobal.h; sourceTree = "<group>"; };
+		2B6542D118AA715A004A5348 /* APPSchoolCategoryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPSchoolCategoryButton.h; sourceTree = "<group>"; };
+		2B6542D218AA715A004A5348 /* APPSchoolCategoryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPSchoolCategoryButton.m; sourceTree = "<group>"; };
+		2B86A726183E1DCC00593BCC /* APPHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPHomeViewController.h; sourceTree = "<group>"; };
+		2B86A727183E1DCC00593BCC /* APPHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPHomeViewController.m; sourceTree = "<group>"; };
 		2BA9A1711836309100DA7B47 /* Ghent-Elementary-School-Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ghent-Elementary-School-Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA9A1741836309100DA7B47 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2BA9A1761836309100DA7B47 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -68,10 +74,8 @@
 		2BA9A1951836309100DA7B47 /* Ghent-Elementary-School-FinderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ghent-Elementary-School-FinderTests-Info.plist"; sourceTree = "<group>"; };
 		2BA9A1971836309100DA7B47 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2BA9A1991836309100DA7B47 /* Ghent_Elementary_School_FinderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ghent_Elementary_School_FinderTests.m; sourceTree = "<group>"; };
-		2BA9A1A71836319300DA7B47 /* APPHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPHomeViewController.h; sourceTree = "<group>"; };
-		2BA9A1A81836319300DA7B47 /* APPHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPHomeViewController.m; sourceTree = "<group>"; };
-		2BA9A1AA1836322E00DA7B47 /* APPNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPNavViewController.h; sourceTree = "<group>"; };
-		2BA9A1AB1836322E00DA7B47 /* APPNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPNavViewController.m; sourceTree = "<group>"; };
+		2BA9A1AA1836322E00DA7B47 /* APPNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APPNavViewController.h; path = Controllers/APPNavViewController.h; sourceTree = "<group>"; };
+		2BA9A1AB1836322E00DA7B47 /* APPNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APPNavViewController.m; path = Controllers/APPNavViewController.m; sourceTree = "<group>"; };
 		2BA9A1B718363D3C00DA7B47 /* APPSearchNetworkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPSearchNetworkViewController.m; sourceTree = "<group>"; };
 		2BA9A1B9183645F900DA7B47 /* APPApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPApiClient.h; sourceTree = "<group>"; };
 		2BA9A1BA183645F900DA7B47 /* APPApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPApiClient.m; sourceTree = "<group>"; };
@@ -117,6 +121,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B86A725183E1D8800593BCC /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2B86A726183E1DCC00593BCC /* APPHomeViewController.h */,
+				2B86A727183E1DCC00593BCC /* APPHomeViewController.m */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		2BA9A1681836309100DA7B47 = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +173,8 @@
 				2BA9A1A31836313C00DA7B47 /* Models */,
 				2BA9A1A41836314800DA7B47 /* Views */,
 				2BA9A1A51836315800DA7B47 /* Controllers */,
+				2BA9A1AA1836322E00DA7B47 /* APPNavViewController.h */,
+				2BA9A1AB1836322E00DA7B47 /* APPNavViewController.m */,
 				2BA9A17B1836309100DA7B47 /* Supporting Files */,
 			);
 			path = "Ghent-Elementary-School-Finder";
@@ -172,6 +187,7 @@
 				2BA9A17D1836309100DA7B47 /* InfoPlist.strings */,
 				2BA9A1801836309100DA7B47 /* main.m */,
 				2BA9A1821836309100DA7B47 /* Ghent-Elementary-School-Finder-Prefix.pch */,
+				2B65429218AA6A6B004A5348 /* APPGlobal.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -210,6 +226,8 @@
 			children = (
 				2BA9A1BF183661DD00DA7B47 /* APPSchoolCell.h */,
 				2BA9A1C0183661DD00DA7B47 /* APPSchoolCell.m */,
+				2B6542D118AA715A004A5348 /* APPSchoolCategoryButton.h */,
+				2B6542D218AA715A004A5348 /* APPSchoolCategoryButton.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -217,12 +235,9 @@
 		2BA9A1A51836315800DA7B47 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2BA9A1A71836319300DA7B47 /* APPHomeViewController.h */,
-				2BA9A1A81836319300DA7B47 /* APPHomeViewController.m */,
-				2BA9A1AA1836322E00DA7B47 /* APPNavViewController.h */,
-				2BA9A1AB1836322E00DA7B47 /* APPNavViewController.m */,
-				2BA9A1C518366BE800DA7B47 /* SearchFilter */,
-				2BA9A1C618366C3800DA7B47 /* SchoolDetail */,
+				2B86A725183E1D8800593BCC /* Home */,
+				2BA9A1C518366BE800DA7B47 /* Search */,
+				2BA9A1C618366C3800DA7B47 /* Detail */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -236,7 +251,7 @@
 			name = AppDelegate;
 			sourceTree = "<group>";
 		};
-		2BA9A1C518366BE800DA7B47 /* SearchFilter */ = {
+		2BA9A1C518366BE800DA7B47 /* Search */ = {
 			isa = PBXGroup;
 			children = (
 				2B1118CD183A528B0048F293 /* APPSecondarySearchFilterViewController.h */,
@@ -248,16 +263,16 @@
 				2BA9A1BC1836572600DA7B47 /* APPSearchResultsViewController.h */,
 				2BA9A1BD1836572600DA7B47 /* APPSearchResultsViewController.m */,
 			);
-			path = SearchFilter;
+			path = Search;
 			sourceTree = "<group>";
 		};
-		2BA9A1C618366C3800DA7B47 /* SchoolDetail */ = {
+		2BA9A1C618366C3800DA7B47 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
 				2BA9A1C218366BD300DA7B47 /* APPSchoolDetailViewController.h */,
 				2BA9A1C318366BD300DA7B47 /* APPSchoolDetailViewController.m */,
 			);
-			path = SchoolDetail;
+			path = Detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -399,10 +414,11 @@
 				2BA9A1AC1836322E00DA7B47 /* APPNavViewController.m in Sources */,
 				2BA9A1BB183645F900DA7B47 /* APPApiClient.m in Sources */,
 				2B1118CC183A526D0048F293 /* APPPrimarySearchFilterViewController.m in Sources */,
-				2BA9A1A91836319300DA7B47 /* APPHomeViewController.m in Sources */,
 				2BA9A1BE1836572600DA7B47 /* APPSearchResultsViewController.m in Sources */,
 				2BA9A1D01836719D00DA7B47 /* APPAnnotation.m in Sources */,
 				2BA9A1B818363D3C00DA7B47 /* APPSearchNetworkViewController.m in Sources */,
+				2B6542D318AA715A004A5348 /* APPSchoolCategoryButton.m in Sources */,
+				2B86A728183E1DCC00593BCC /* APPHomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

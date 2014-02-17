@@ -33,7 +33,7 @@
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
     
-    self.searchOfferArray = @[@"Katholiek onderwijs", @"Onderwijs Stad Gent", @"Overleg kleine onderwijsverstrekkers", @"GO!Onderwijs van de Vlaamse gemeenschap"];
+    self.searchOfferArray = @[@"Alles", @"Katholiek onderwijs", @"Onderwijs Stad Gent", @"Overleg kleine onderwijsverstrekkers", @"GO!Onderwijs van de Vlaamse gemeenschap"];
 }
 
 #pragma mark TableView Delegate methods

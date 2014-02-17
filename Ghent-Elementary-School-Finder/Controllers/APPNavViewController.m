@@ -17,7 +17,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self.navigationBar setBarTintColor:appColorBlue];
+        self.title = @"Schoollocator";
+        [self.navigationBar setBarTintColor:NAVBARCOLOR];
         [self.navigationBar setTintColor:[UIColor whiteColor]];
         [self.navigationBar setTranslucent:NO];
         [self.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName]];

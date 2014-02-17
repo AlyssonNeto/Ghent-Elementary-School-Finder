@@ -73,7 +73,7 @@ static BOOL haveAlreadyReceivedCoordinates;
     [self.view addSubview:self.mapView];
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, BOTTOM(self.tableView), WIDTH(self.view), 49)];
-    footerView.backgroundColor = appColorBackground;
+    footerView.backgroundColor = GREEN;
     
     self.listButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, WIDTH(self.view) / 2, 49)];
     [self.listButton setImage:[UIImage imageNamed:@"list"] forState:UIControlStateSelected];
@@ -122,6 +122,34 @@ static BOOL haveAlreadyReceivedCoordinates;
     [[self.tableView refreshControl] endRefreshing];
 }
 
+- (void)addAnnotationsToMap {
+    dispatch_async( dispatch_get_main_queue(), ^{
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        
+        for (int i = 0; i < [_data count]; i++) {
+            APPAnnotation *annotation = [[APPAnnotation alloc] init];
+            annotation.lat = [[_data[i] valueForKey:@"lat"] floatValue];
+            annotation.lon = [[_data[i] valueForKey:@"long"] floatValue];
+            if ([_data[i] valueForKey:@"naam"]) {
+                annotation.title = [_data[i] valueForKey:@"naam"];
+            }
+            else {
+                annotation.title = [_data[i] valueForKey:@"roepnaam"];
+            }
+            
+            if ([_data[i] valueForKey:@"adres"]) {
+                annotation.subtitle = [_data[i] valueForKey:@"adres"];
+            }
+            else {
+                annotation.subtitle = [_data[i] valueForKey:@"straat"];
+            }
+            annotation.tag = i;
+            [self.mapView addAnnotation:annotation];
+        }
+        [self.tableView reloadData];
+    });
+}
+
 -(void)orderResponseDataByDistance {
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (id school in _data) {
@@ -136,29 +164,7 @@ static BOOL haveAlreadyReceivedCoordinates;
             return [distance1 compare:distance2];
         }];
         
-        dispatch_async( dispatch_get_main_queue(), ^{
-            for (int i = 0; i < [_data count]; i++) {
-                APPAnnotation *annotation = [[APPAnnotation alloc] init];
-                annotation.lat = [[_data[i] valueForKey:@"lat"] floatValue];
-                annotation.lon = [[_data[i] valueForKey:@"long"] floatValue];
-                if ([_data[i] valueForKey:@"naam"]) {
-                    annotation.title = [_data[i] valueForKey:@"naam"];
-                }
-                else {
-                    annotation.title = [_data[i] valueForKey:@"roepnaam"];
-                }
-                
-                if ([_data[i] valueForKey:@"adres"]) {
-                    annotation.subtitle = [_data[i] valueForKey:@"adres"];
-                }
-                else {
-                    annotation.subtitle = [_data[i] valueForKey:@"straat"];
-                }
-                annotation.tag = i;
-                [self.mapView addAnnotation:annotation];
-            }
-            [self.tableView reloadData];
-        });
+        [self addAnnotationsToMap];
     });
 }
 
@@ -231,16 +237,26 @@ static BOOL haveAlreadyReceivedCoordinates;
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     if(!haveAlreadyReceivedCoordinates) {
         _location = [locations lastObject];
+        MKCoordinateRegion mapRegion;
+        mapRegion.center = _location.coordinate;
+        mapRegion.span.latitudeDelta = 0.05;
+        mapRegion.span.longitudeDelta = 0.05;
+        
+        [self.mapView setRegion:mapRegion animated: YES];
         [self orderResponseDataByDistance];
     }
     [self.locationManager stopUpdatingLocation];
     haveAlreadyReceivedCoordinates = YES;
+}
+
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    [self addAnnotationsToMap];
     
     MKCoordinateRegion mapRegion;
-    mapRegion.center = _location.coordinate;
-    mapRegion.span.latitudeDelta = 0.05;
-    mapRegion.span.longitudeDelta = 0.05;
+    mapRegion.center = CLLocationCoordinate2DMake(51.05, 3.733333);
     
+    mapRegion.span.latitudeDelta = 0.10;
+    mapRegion.span.longitudeDelta = 0.10;
     [self.mapView setRegion:mapRegion animated: YES];
 }
 
